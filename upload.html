@@ -7,72 +7,72 @@
   <script>
     (function () {
       try {
-        var theme = localStorage.getItem('runtrack-theme');
-        document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-      } catch (error) {
+        var t = localStorage.getItem('runtrack-theme');
+        document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+      } catch (e) {
         document.documentElement.setAttribute('data-theme', 'light');
       }
     }());
   </script>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .page-header {
-      padding: 3rem 3rem 2rem;
-      border-bottom: 1px solid var(--border);
+    /* ── PAGE ── */
+    .page-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
       position: relative;
       z-index: 1;
+    }
+
+    .page-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
     }
 
     .page-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.5rem;
+      font-size: 2.8rem;
       letter-spacing: 2px;
       line-height: 1;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .page-sub {
       color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    /* ── MAIN LAYOUT ── */
-    .upload-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      min-height: calc(100vh - 200px);
-      position: relative;
-      z-index: 1;
-    }
-
-    .upload-left {
-      padding: 2.5rem 3rem;
-      border-right: 1px solid var(--border);
-    }
-
-    .upload-right {
-      padding: 2.5rem 3rem;
+      font-size: 0.92rem;
+      margin-bottom: 2rem;
     }
 
     /* ── CONFIG PANEL ── */
-    .config-toggle {
+    .config-row {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .config-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       background: transparent;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       color: var(--text-muted);
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.85rem;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s;
-      margin-bottom: 1.5rem;
     }
 
     .config-toggle:hover {
@@ -84,30 +84,20 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
       display: none;
     }
 
     .config-panel.open { display: block; }
 
-    .config-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .config-panel .save-btn {
-      margin-top: 0.5rem;
-    }
-
     .config-saved {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
       font-size: 0.8rem;
       color: var(--mint);
       opacity: 0;
       transition: opacity 0.3s;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 1px;
     }
 
     .config-saved.show { opacity: 1; }
@@ -115,13 +105,13 @@
     /* ── DROP ZONE ── */
     .drop-zone {
       border: 2px dashed var(--border);
-      border-radius: 8px;
-      padding: 3rem 2rem;
+      border-radius: 10px;
+      padding: 2.5rem 1.5rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.25s;
       position: relative;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       background: var(--bg-card);
     }
 
@@ -143,57 +133,33 @@
       inset: 0;
       opacity: 0;
       cursor: pointer;
+      width: 100%;
+      height: 100%;
     }
 
-    .drop-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
+    .drop-icon { font-size: 2.2rem; margin-bottom: 0.6rem; display: block; }
     .drop-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
+    .drop-hint { font-size: 0.82rem; color: var(--text-muted); }
+    .drop-hint span { color: var(--orange); text-decoration: underline; }
 
-    .drop-hint {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .drop-hint span {
-      color: var(--orange);
-      text-decoration: underline;
-    }
-
-    #image-preview {
-      width: 100%;
-      display: none;
-      border-radius: 6px;
-    }
-
+    #image-preview { width: 100%; display: none; border-radius: 8px; }
     #image-preview.show { display: block; }
 
-    /* ── EXTRACT BUTTON ── */
-    .extract-section {
+    /* ── ACTIONS ROW ── */
+    .action-row {
       display: flex;
-      gap: 1rem;
-      align-items: center;
-      margin-bottom: 1.5rem;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
     }
 
-    #extract-btn {
-      flex: 1;
-    }
-
-    #clear-btn {
-      flex-shrink: 0;
-    }
+    #extract-btn { flex: 1; }
 
     /* ── AI STATUS ── */
     .ai-status {
@@ -203,9 +169,9 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.88rem;
     }
 
     .ai-status.show { display: flex; }
@@ -214,163 +180,91 @@
     .ai-status.error { border-color: rgba(255,85,0,0.5); color: #FF7056; }
 
     /* ── RESULT FORM ── */
-    #result-form {
-      display: none;
-    }
-
+    #result-form { display: none; }
     #result-form.show { display: block; }
 
-    .form-section-title {
+    .form-section-label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       gap: 0.5rem;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .form-grid .full {
-      grid-column: 1 / -1;
     }
 
     .ai-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--mint);
       background: var(--mint-dim);
       border: 1px solid rgba(0,229,160,0.2);
-      padding: 0.2rem 0.5rem;
+      padding: 0.15rem 0.45rem;
       border-radius: 2px;
     }
 
-    .submit-section {
-      margin-top: 2rem;
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .form-grid .full { grid-column: 1 / -1; }
+
+    .submit-row {
+      margin-top: 1.5rem;
       display: flex;
-      gap: 1rem;
-      align-items: center;
+      gap: 0.75rem;
     }
 
-    #submit-btn {
-      flex: 1;
-    }
+    #submit-btn { flex: 1; }
 
-    /* ── RIGHT PANEL (Tips) ── */
-    .tips-panel h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 1.25rem;
-      color: var(--text-muted);
-    }
-
-    .tip-item {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .tip-item:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .tip-icon {
-      font-size: 1.5rem;
-      flex-shrink: 0;
-      width: 40px;
-      text-align: center;
-    }
-
-    .tip-text strong {
-      display: block;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-      color: var(--text);
-    }
-
-    .tip-text p {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* ── SAMPLE APPS ── */
-    .app-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 2rem;
-    }
-
-    .app-badge {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.4rem 0.75rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    /* ── SUCCESS STATE ── */
+    /* ── SUCCESS ── */
     #success-panel {
       display: none;
       text-align: center;
-      padding: 3rem 2rem;
+      padding: 3rem 1.5rem;
     }
 
     #success-panel.show { display: block; }
 
-    .success-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-    }
+    .success-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
 
     .success-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
+      font-size: 2.5rem;
       letter-spacing: 2px;
       color: var(--mint);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
-    .success-sub {
-      color: var(--text-muted);
-      margin-bottom: 2rem;
+    .success-sub { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.92rem; }
+
+    .success-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
-    @media (max-width: 900px) {
-      .upload-layout { grid-template-columns: 1fr; }
-      .upload-left { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem 1.5rem; }
-      .upload-right { padding: 2rem 1.5rem; }
-      .page-header { padding: 2rem 1.5rem; }
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .page-wrap { padding: 1.25rem 1rem 3rem; }
+      .page-title { font-size: 2.2rem; }
       .form-grid { grid-template-columns: 1fr; }
+      .action-row, .submit-row, .success-actions { flex-direction: column; }
+      #extract-btn, #submit-btn { width: 100%; }
     }
   </style>
 </head>
@@ -381,10 +275,10 @@
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="upload.html" class="active">Upload Result</a></li>
+      <li><a href="upload.html" class="active">Upload</a></li>
       <li><a href="leaderboard.html">Leaderboard</a></li>
     </ul>
-    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">
+    <button class="theme-toggle" type="button" aria-label="Toggle theme">
       <span class="theme-toggle-icon" aria-hidden="true">☀</span>
       <span class="theme-toggle-text">
         <span class="theme-toggle-label">Theme</span>
@@ -394,214 +288,135 @@
   </div>
 </nav>
 
-<div class="page-header">
-  <div class="section-label">AI-Powered Submission</div>
+<div class="page-wrap">
+  <div class="page-eyebrow">AI-Powered Submission</div>
   <h1 class="page-title">Upload Your Run</h1>
-  <p class="page-sub">Upload a screenshot from any running app. AI will extract your stats automatically.</p>
-</div>
+  <p class="page-sub">Screenshot any running app — AI extracts your stats automatically.</p>
 
-<div class="upload-layout">
-  <!-- LEFT: Upload + Form -->
-  <div class="upload-left">
-    <!-- Config Toggle -->
-    <button class="config-toggle" onclick="toggleConfig()">
-      ⚙️ &nbsp;API Configuration
-      <span id="config-arrow">▼</span>
+  <!-- Config Toggle -->
+  <div class="config-row">
+    <button class="config-toggle" onclick="toggleConfig()" id="config-toggle-btn">
+      ⚙ API Config <span id="config-arrow">▼</span>
     </button>
+    <span class="config-saved" id="config-saved">✓ Saved</span>
+  </div>
 
-    <div class="config-panel" id="config-panel">
-      <div class="config-grid">
-        <div class="form-group">
-          <label>OpenRouter API Key</label>
-          <input type="password" id="api-key" placeholder="sk-or-v1-..." autocomplete="off" />
-        </div>
-        <div class="form-group">
-          <label>AI Model</label>
-          <select id="ai-model">
-            <option value="openai/gpt-4o-mini">GPT-4o Mini (Recommended)</option>
-            <option value="openai/gpt-4o">GPT-4o (More Accurate)</option>
-            <option value="google/gemini-2.0-flash-001">Gemini 2.0 Flash</option>
-            <option value="anthropic/claude-3-haiku">Claude 3 Haiku</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Google Apps Script URL</label>
-          <input type="url" id="gas-url" placeholder="https://script.google.com/macros/s/.../exec" />
-        </div>
-        <div style="display:flex; align-items:center; gap:1rem;">
-          <button class="btn btn-primary save-btn" onclick="saveConfig()">Save Config</button>
-          <span class="config-saved" id="config-saved">✓ Saved</span>
-        </div>
+  <div class="config-panel" id="config-panel">
+    <div class="form-group" style="margin-bottom:0.85rem;">
+      <label>OpenRouter API Key</label>
+      <input type="password" id="api-key" placeholder="sk-or-v1-..." autocomplete="off" />
+    </div>
+    <div class="form-group" style="margin-bottom:0.85rem;">
+      <label>AI Model</label>
+      <select id="ai-model">
+        <option value="openai/gpt-4o-mini">GPT-4o Mini (Recommended)</option>
+        <option value="openai/gpt-4o">GPT-4o (More Accurate)</option>
+        <option value="google/gemini-2.0-flash-001">Gemini 2.0 Flash</option>
+        <option value="anthropic/claude-3-haiku">Claude 3 Haiku</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label>Google Apps Script URL</label>
+      <input type="url" id="gas-url" placeholder="https://script.google.com/macros/s/.../exec" />
+    </div>
+    <button class="btn btn-primary" onclick="saveConfig()" style="width:100%;">Save Config</button>
+  </div>
+
+  <!-- Drop Zone -->
+  <div class="drop-zone" id="drop-zone">
+    <input type="file" id="file-input" accept="image/*" onchange="handleFile(this.files[0])" />
+    <span class="drop-icon">📷</span>
+    <div class="drop-title">Drop screenshot here</div>
+    <div class="drop-hint">or <span>browse files</span> · JPG, PNG, HEIC</div>
+    <img id="image-preview" src="" alt="Preview" />
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-row">
+    <button class="btn btn-primary" id="extract-btn" onclick="extractData()" disabled>
+      🤖 Extract with AI
+    </button>
+    <button class="btn btn-ghost" id="clear-btn" onclick="clearAll()" style="display:none;">
+      ✕ Clear
+    </button>
+  </div>
+
+  <!-- AI Status -->
+  <div class="ai-status" id="ai-status">
+    <div class="spinner" id="ai-spinner"></div>
+    <span id="ai-status-text">Analyzing screenshot...</span>
+  </div>
+
+  <!-- Result Form -->
+  <div id="result-form">
+    <div class="form-section-label">
+      Extracted Data
+      <span class="ai-badge">✨ AI</span>
+      <span style="margin-left:auto;font-size:0.75rem;font-weight:400;color:var(--text-dim);">Review before submitting</span>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Runner Name *</label>
+        <input type="text" id="f-name" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="f-date" />
+      </div>
+      <div class="form-group">
+        <label>Finish Time</label>
+        <input type="text" id="f-finish-time" placeholder="HH:MM" />
+      </div>
+      <div class="form-group">
+        <label>Distance (km) *</label>
+        <input type="number" id="f-distance" step="0.01" min="0" placeholder="e.g. 10.5" />
+      </div>
+      <div class="form-group">
+        <label>Pace (MM:SS /km)</label>
+        <input type="text" id="f-pace" placeholder="e.g. 5:32" />
+      </div>
+      <div class="form-group full">
+        <label>Total Time (HH:MM:SS)</label>
+        <input type="text" id="f-time" placeholder="e.g. 00:55:20" />
       </div>
     </div>
 
-    <!-- Drop Zone -->
-    <div class="drop-zone" id="drop-zone">
-      <input type="file" id="file-input" accept="image/*" onchange="handleFile(this.files[0])" />
-      <span class="drop-icon">📷</span>
-      <div class="drop-title">Drop your screenshot here</div>
-      <div class="drop-hint">or <span>browse files</span> &nbsp;·&nbsp; JPG, PNG, HEIC supported</div>
-      <img id="image-preview" src="" alt="Preview" />
-    </div>
-
-    <!-- Extract Button -->
-    <div class="extract-section">
-      <button class="btn btn-primary" id="extract-btn" onclick="extractData()" disabled>
-        🤖 &nbsp;Extract Data with AI
+    <div class="submit-row">
+      <button class="btn btn-primary" id="submit-btn" onclick="submitData()">
+        🏆 Submit to Leaderboard
       </button>
-      <button class="btn btn-ghost" id="clear-btn" onclick="clearAll()" style="display:none;">
-        ✕ Clear
-      </button>
-    </div>
-
-    <!-- AI Status -->
-    <div class="ai-status" id="ai-status">
-      <div class="spinner" id="ai-spinner"></div>
-      <span id="ai-status-text">Analyzing your screenshot...</span>
-    </div>
-
-    <!-- Result Form -->
-    <div id="result-form">
-      <div class="form-section-title">
-        Extracted Data
-        <span class="ai-badge">✨ AI-Generated</span>
-        <span style="margin-left:auto; font-size:0.78rem; font-weight:400; color:var(--text-dim);">Review before submitting</span>
-      </div>
-
-      <div class="form-grid">
-        <div class="form-group full">
-          <label>Runner Name *</label>
-          <input type="text" id="f-name" placeholder="Your name" />
-        </div>
-        <div class="form-group">
-          <label>Finish Date</label>
-          <input type="date" id="f-date" />
-        </div>
-        <div class="form-group">
-          <label>Finish Time (HH:MM:SS)</label>
-          <input type="text" id="f-finish-time" placeholder="e.g. 10:30:00" />
-        </div>
-        <div class="form-group">
-          <label>Distance (km) *</label>
-          <input type="number" id="f-distance" step="0.01" min="0" placeholder="e.g. 10.5" />
-        </div>
-        <div class="form-group">
-          <label>Pace (MM:SS /km)</label>
-          <input type="text" id="f-pace" placeholder="e.g. 5:32" />
-        </div>
-        <div class="form-group full">
-          <label>Total Time (HH:MM:SS)</label>
-          <input type="text" id="f-time" placeholder="e.g. 00:55:20" />
-        </div>
-      </div>
-
-      <div class="submit-section">
-        <button class="btn btn-primary" id="submit-btn" onclick="submitData()">
-          🏆 &nbsp;Submit to Leaderboard
-        </button>
-        <button class="btn btn-ghost" onclick="clearAll()">Start Over</button>
-      </div>
-    </div>
-
-    <!-- Success Panel -->
-    <div id="success-panel">
-      <div class="success-icon">🎉</div>
-      <div class="success-title">You're on the Board!</div>
-      <p class="success-sub">Your result has been submitted successfully.</p>
-      <div style="display:flex; gap:1rem; justify-content:center;">
-        <a href="leaderboard.html" class="btn btn-primary">View Leaderboard →</a>
-        <button class="btn btn-ghost" onclick="clearAll()">Submit Another</button>
-      </div>
+      <button class="btn btn-ghost" onclick="clearAll()">Start Over</button>
     </div>
   </div>
 
-  <!-- RIGHT: Tips Panel -->
-  <div class="upload-right tips-panel">
-    <h3>📋 Tips for Best Results</h3>
-
-    <div class="tip-item">
-      <div class="tip-icon">📱</div>
-      <div class="tip-text">
-        <strong>Full Screen Screenshot</strong>
-        <p>Capture the full results screen after completing your run. Make sure all stats are visible and the screen isn't partially cut off.</p>
-      </div>
-    </div>
-
-    <div class="tip-item">
-      <div class="tip-icon">💡</div>
-      <div class="tip-text">
-        <strong>Good Lighting & Resolution</strong>
-        <p>For photos of physical devices, ensure good lighting with no glare. Screenshots from apps tend to work best.</p>
-      </div>
-    </div>
-
-    <div class="tip-item">
-      <div class="tip-icon">🏷️</div>
-      <div class="tip-text">
-        <strong>Show Your Name</strong>
-        <p>Make sure your profile name is visible in the screenshot. You can always edit it in the form before submitting.</p>
-      </div>
-    </div>
-
-    <div class="tip-item">
-      <div class="tip-icon">🔍</div>
-      <div class="tip-text">
-        <strong>Always Review First</strong>
-        <p>After AI extraction, review all fields before submitting. You can edit any values the AI got wrong. Name and Distance are required.</p>
-      </div>
-    </div>
-
-    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border);">
-      <h3>✅ Supported Apps</h3>
-      <div class="app-badges">
-        <span class="app-badge">🟠 Strava</span>
-        <span class="app-badge">⌚ Garmin Connect</span>
-        <span class="app-badge">🍎 Apple Fitness</span>
-        <span class="app-badge">👟 Nike Run Club</span>
-        <span class="app-badge">⌚ Apple Watch</span>
-        <span class="app-badge">🌊 Suunto</span>
-        <span class="app-badge">🏃 Runkeeper</span>
-        <span class="app-badge">📊 Adidas Running</span>
-        <span class="app-badge">+ Any app</span>
-      </div>
-    </div>
-
-    <!-- Config Helper -->
-    <div style="margin-top:2rem; padding:1.25rem; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);">
-      <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.75rem;">
-        🔑 First Time Setup
-      </div>
-      <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
-        Click <strong style="color:var(--text);">⚙️ API Configuration</strong> above to enter your
-        OpenRouter API key and Google Apps Script URL.
-        These are saved to your browser and only need to be entered once.
-      </p>
-      <a href="https://openrouter.ai/keys" target="_blank"
-         style="display:inline-block; margin-top:0.75rem; font-size:0.82rem; color:var(--orange); text-decoration:none;">
-        Get OpenRouter API Key →
-      </a>
+  <!-- Success Panel -->
+  <div id="success-panel">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">You're on the Board!</div>
+    <p class="success-sub">Your result has been submitted successfully.</p>
+    <div class="success-actions">
+      <a href="leaderboard.html" class="btn btn-primary">View Leaderboard →</a>
+      <button class="btn btn-ghost" onclick="clearAll()">Submit Another</button>
     </div>
   </div>
 </div>
 
 <div id="toast"></div>
 
+<script src="config.js"></script>
 <script src="theme.js"></script>
 <script>
   let selectedFile = null;
-  let extractedData = null;
 
-  // ── LOAD SAVED CONFIG ──
+  // ── LOAD CONFIG ──
   window.addEventListener('load', () => {
-    const savedKey = localStorage.getItem('openrouterKey');
-    const savedUrl = localStorage.getItem('gasUrl');
-    const savedModel = localStorage.getItem('aiModel');
-    if (savedKey) document.getElementById('api-key').value = savedKey;
-    if (savedUrl) document.getElementById('gas-url').value = savedUrl;
-    if (savedModel) document.getElementById('ai-model').value = savedModel;
+    document.getElementById('api-key').value   = getConfig('OPENROUTER_API_KEY');
+    document.getElementById('gas-url').value   = getConfig('GAS_URL');
+    document.getElementById('ai-model').value  = getConfig('DEFAULT_AI_MODEL') || 'openai/gpt-4o-mini';
   });
 
-  // ── CONFIG ──
+  // ── CONFIG PANEL ──
   function toggleConfig() {
     const panel = document.getElementById('config-panel');
     const arrow = document.getElementById('config-arrow');
@@ -610,11 +425,11 @@
   }
 
   function saveConfig() {
-    const key = document.getElementById('api-key').value.trim();
-    const url = document.getElementById('gas-url').value.trim();
+    const key   = document.getElementById('api-key').value.trim();
+    const url   = document.getElementById('gas-url').value.trim();
     const model = document.getElementById('ai-model').value;
-    if (key) localStorage.setItem('openrouterKey', key);
-    if (url) localStorage.setItem('gasUrl', url);
+    if (key)   localStorage.setItem('openrouterKey', key);
+    if (url)   localStorage.setItem('gasUrl', url);
     if (model) localStorage.setItem('aiModel', model);
     const saved = document.getElementById('config-saved');
     saved.classList.add('show');
@@ -628,9 +443,7 @@
     e.preventDefault();
     dropZone.classList.add('dragover');
   });
-
   dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-
   dropZone.addEventListener('drop', e => {
     e.preventDefault();
     dropZone.classList.remove('dragover');
@@ -641,7 +454,6 @@
   function handleFile(file) {
     if (!file) return;
     selectedFile = file;
-
     const reader = new FileReader();
     reader.onload = e => {
       const preview = document.getElementById('image-preview');
@@ -660,8 +472,6 @@
   // ── CLEAR ──
   function clearAll() {
     selectedFile = null;
-    extractedData = null;
-
     const preview = document.getElementById('image-preview');
     preview.src = '';
     preview.classList.remove('show');
@@ -669,7 +479,6 @@
     dropZone.querySelector('.drop-icon').style.display = '';
     dropZone.querySelector('.drop-title').style.display = '';
     dropZone.querySelector('.drop-hint').style.display = '';
-
     document.getElementById('file-input').value = '';
     document.getElementById('extract-btn').disabled = true;
     document.getElementById('clear-btn').style.display = 'none';
@@ -680,26 +489,24 @@
 
   // ── EXTRACT DATA ──
   async function extractData() {
-    const apiKey = localStorage.getItem('openrouterKey') || document.getElementById('api-key').value.trim();
-    const model = localStorage.getItem('aiModel') || document.getElementById('ai-model').value;
+    const apiKey = getConfig('OPENROUTER_API_KEY');
+    const model  = getConfig('DEFAULT_AI_MODEL') || 'openai/gpt-4o-mini';
 
     if (!apiKey) {
       showToast('⚠️ Please enter your OpenRouter API key in configuration.', 'error');
       toggleConfig();
       return;
     }
-
     if (!selectedFile) {
       showToast('⚠️ Please select an image first.', 'error');
       return;
     }
 
-    setAiStatus('processing', '🤖 Analyzing your screenshot with AI...');
+    setAiStatus('processing', '🤖 Analyzing screenshot with AI...');
     document.getElementById('extract-btn').disabled = true;
     document.getElementById('result-form').classList.remove('show');
 
     try {
-      // Convert image to base64
       const base64 = await fileToBase64(selectedFile);
 
       const prompt = `You are analyzing a running activity screenshot from a mobile app or sports watch.
@@ -709,9 +516,9 @@ Extract these exact fields and return ONLY a valid JSON object, no markdown, no 
   "name": "runner's name or username shown in the app (empty string if not visible)",
   "finish_date": "activity date in YYYY-MM-DD format (empty string if not found)",
   "finish_time": "time of day when run was completed in HH:MM format (empty string if not found)",
-  "distance": "total distance as a decimal number in km (convert miles to km if needed, e.g. 6.2)",
+  "distance": "total distance as a decimal number in km (convert miles to km if needed)",
   "pace": "average pace in MM:SS format per km (empty string if not found)",
-  "time": "total elapsed/moving time in HH:MM:SS format (e.g. 01:02:30) or MM:SS if under 1 hour"
+  "time": "total elapsed/moving time in HH:MM:SS format (e.g. 01:02:30)"
 }
 
 Rules:
@@ -728,15 +535,12 @@ Rules:
           'X-Title': 'RunTrack Virtual Event'
         },
         body: JSON.stringify({
-          model: model,
+          model,
           max_tokens: 600,
           messages: [{
             role: 'user',
             content: [
-              {
-                type: 'image_url',
-                image_url: { url: base64 }
-              },
+              { type: 'image_url', image_url: { url: base64 } },
               { type: 'text', text: prompt }
             ]
           }]
@@ -749,17 +553,12 @@ Rules:
       }
 
       const data = await response.json();
-      const text = data?.choices?.[0]?.message?.content || '';
-
-      // Parse JSON from response
-      let jsonText = text.trim();
-      // Strip markdown fences if present
+      let jsonText = (data?.choices?.[0]?.message?.content || '').trim();
       jsonText = jsonText.replace(/^```json?\s*/i, '').replace(/\s*```$/, '').trim();
 
-      extractedData = JSON.parse(jsonText);
-      populateForm(extractedData);
-
-      setAiStatus('done', '✅ Extraction complete — review and edit before submitting');
+      const extracted = JSON.parse(jsonText);
+      populateForm(extracted);
+      setAiStatus('done', '✅ Done — review and edit before submitting');
       document.getElementById('result-form').classList.add('show');
 
     } catch (err) {
@@ -771,17 +570,17 @@ Rules:
   }
 
   function populateForm(data) {
-    document.getElementById('f-name').value = data.name || '';
-    document.getElementById('f-date').value = data.finish_date || '';
+    document.getElementById('f-name').value        = data.name || '';
+    document.getElementById('f-date').value        = data.finish_date || '';
     document.getElementById('f-finish-time').value = data.finish_time || '';
-    document.getElementById('f-distance').value = data.distance || '';
-    document.getElementById('f-pace').value = data.pace || '';
-    document.getElementById('f-time').value = data.time || '';
+    document.getElementById('f-distance').value    = data.distance || '';
+    document.getElementById('f-pace').value        = data.pace || '';
+    document.getElementById('f-time').value        = data.time || '';
   }
 
   // ── SUBMIT DATA ──
   async function submitData() {
-    const gasUrl = localStorage.getItem('gasUrl') || document.getElementById('gas-url').value.trim();
+    const gasUrl = getConfig('GAS_URL');
 
     if (!gasUrl) {
       showToast('⚠️ Please enter your Google Apps Script URL in configuration.', 'error');
@@ -789,7 +588,7 @@ Rules:
       return;
     }
 
-    const name = document.getElementById('f-name').value.trim();
+    const name     = document.getElementById('f-name').value.trim();
     const distance = document.getElementById('f-distance').value.trim();
 
     if (!name) {
@@ -808,44 +607,40 @@ Rules:
     submitBtn.innerHTML = '<div class="spinner"></div> &nbsp;Submitting...';
 
     const params = new URLSearchParams({
-      action: 'submit',
-      name: name,
+      action:      'submit',
+      name,
       finish_date: document.getElementById('f-date').value,
       finish_time: document.getElementById('f-finish-time').value,
-      distance: parseFloat(distance),
-      pace: document.getElementById('f-pace').value,
-      time: document.getElementById('f-time').value
+      distance:    parseFloat(distance),
+      pace:        document.getElementById('f-pace').value,
+      time:        document.getElementById('f-time').value
     });
 
     try {
       await fetch(`${gasUrl}?${params.toString()}`);
-      // Show success (can't read response with no-cors but data is written)
       document.getElementById('result-form').classList.remove('show');
       document.getElementById('success-panel').style.display = 'block';
       document.getElementById('ai-status').classList.remove('show');
-
     } catch (err) {
       console.error(err);
       showToast('Submission failed. Check your Apps Script URL.', 'error');
       submitBtn.disabled = false;
-      submitBtn.innerHTML = '🏆 &nbsp;Submit to Leaderboard';
+      submitBtn.innerHTML = '🏆 Submit to Leaderboard';
     }
   }
 
   // ── HELPERS ──
   function setAiStatus(state, text) {
     const el = document.getElementById('ai-status');
-    const spinner = document.getElementById('ai-spinner');
-    const textEl = document.getElementById('ai-status-text');
     el.className = 'ai-status show ' + state;
-    textEl.textContent = text;
-    spinner.style.display = state === 'processing' ? 'block' : 'none';
+    document.getElementById('ai-status-text').textContent = text;
+    document.getElementById('ai-spinner').style.display = state === 'processing' ? 'block' : 'none';
   }
 
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
+      reader.onload  = () => resolve(reader.result);
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });

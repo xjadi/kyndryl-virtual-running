@@ -1,194 +1,184 @@
-# RunTrack — Virtual Running Event Tracker
-## Setup Guide
+# Kyndryl Virtual Run 🏃
+
+AI-powered virtual running event: upload a screenshot from any running app, let AI extract your stats, and submit to a shared leaderboard backed by Google Sheets.
 
 ---
 
-## What You Get
+## Features
 
-| File | Description |
-|------|-------------|
-| `index.html` | Landing page with event info |
-| `upload.html` | Runner photo upload + AI extraction |
-| `leaderboard.html` | Live rankings by longest distance |
-| `style.css` | Shared stylesheet (must be in same folder) |
-| `Code.gs` | Google Apps Script (backend + database) |
+- **AI Extraction** — Upload a screenshot from Strava, Garmin, Apple Fitness, Nike Run, etc. AI reads your name, distance, pace, and time automatically.
+- **Google Sheets Leaderboard** — Results are stored in a Google Sheet via Google Apps Script.
+- **Ranked by Total Distance** — Each person's runs are summed; the leaderboard shows cumulative km per runner.
+- **Light / Dark Mode** — Theme toggle with system preference detection.
+- **Fully Responsive** — Works on desktop and mobile.
 
 ---
 
-## Step 1 — Set Up Google Sheets (Database)
-
-1. Go to [sheets.google.com](https://sheets.google.com) and create a **new spreadsheet**
-2. Name it something like `RunTrack Event`
-3. Open **Extensions → Apps Script**
-4. Delete all existing code in the editor
-5. Copy and paste the entire contents of `Code.gs`
-6. Click **Save** (Ctrl+S / Cmd+S)
-
----
-
-## Step 2 — Deploy the Apps Script as a Web App
-
-1. In Apps Script, click **Deploy → New deployment**
-2. Click the gear icon ⚙️ next to "Type" and select **Web app**
-3. Set the following:
-   - **Description:** RunTrack API
-   - **Execute as:** Me (your Google account)
-   - **Who has access:** Anyone
-4. Click **Deploy**
-5. Authorize the app when prompted (click "Allow")
-6. **Copy the Web App URL** — it looks like:
-   ```
-   https://script.google.com/macros/s/AKfycbz.../exec
-   ```
-7. Save this URL — you'll need it in the next steps
-
-> ⚠️ If you update `Code.gs` later, you must create a **new deployment** each time.
-
----
-
-## Step 3 — Get Your OpenRouter API Key
-
-1. Go to [openrouter.ai](https://openrouter.ai) and sign up / log in
-2. Navigate to **Keys** → **Create Key**
-3. Copy your API key (starts with `sk-or-v1-...`)
-4. Fund your account with a small amount (GPT-4o Mini costs ~$0.0003/image)
-
-**Recommended Models (best to cheapest):**
-- `openai/gpt-4o-mini` — Best accuracy, very cheap (~$0.0003/call)
-- `google/gemini-2.0-flash-001` — Fast and accurate
-- `openai/gpt-4o` — Most accurate, higher cost
-
----
-
-## Step 4 — Deploy the Frontend
-
-### Option A: Local (Just Open Files)
-Simply open `index.html` in your browser. All pages link to each other via relative paths.
-
-### Option B: GitHub Pages (Free Hosting)
-1. Create a GitHub repo and upload all 5 files
-2. Go to **Settings → Pages**
-3. Source: Deploy from branch → `main` → `/ (root)`
-4. Your site will be live at `https://yourusername.github.io/repo-name/`
-
-### Option C: Netlify (Free + Custom Domain)
-1. Go to [netlify.com](https://netlify.com)
-2. Drag and drop your project folder onto the Netlify dashboard
-3. Done — instant deployment with a free URL
-
----
-
-## Step 5 — Configure the App
-
-When you first open the app:
-
-1. Go to `upload.html`
-2. Click **⚙️ API Configuration**
-3. Enter your **OpenRouter API key**
-4. Select your preferred **AI model**
-5. Paste your **Google Apps Script URL**
-6. Click **Save Config**
-
-These are stored in your browser's localStorage.
-
-On `leaderboard.html`, you'll also be prompted to enter the Apps Script URL the first time.
-
----
-
-## How It Works
+## Project Structure
 
 ```
-User uploads running screenshot
-        ↓
-OpenRouter Vision AI reads the image
-        ↓
-Extracts: name, date, finish_time, distance, pace, time
-        ↓
-User reviews & edits extracted data
-        ↓
-Clicks "Submit to Leaderboard"
-        ↓
-Data sent to Google Apps Script via GET request
-        ↓
-Apps Script appends row to Google Sheet
-        ↓
-Leaderboard page fetches from Apps Script
-        ↓
-Rankings displayed sorted by longest distance
+kyndryl-virtual-run/
+├── index.html        # Landing page
+├── upload.html       # Screenshot upload + AI extraction + submission
+├── leaderboard.html  # Ranked leaderboard (sum of distance per runner)
+├── style.css         # Shared design system
+├── theme.js          # Light/dark theme logic
+├── config.js         # ⚙️ App configuration (API keys, GAS URL, AI model)
+├── Code.gs           # Google Apps Script (backend)
+└── README.md
 ```
 
 ---
 
-## Google Sheet Column Structure
+## Configuration (`config.js`)
 
-The `Runners` sheet is auto-created with these columns:
+Open `config.js` and fill in your values:
 
-| Column | Type | Example |
-|--------|------|---------|
-| name | Text | John Smith |
-| finish_date | Date | 2024-03-15 |
-| finish_time | Time | 07:30:00 |
-| distance | Number (km) | 21.1 |
-| pace | Text | 5:32 |
-| time | Text | 01:57:44 |
-| submitted_at | ISO timestamp | 2024-03-15T08:00:00Z |
+```js
+const APP_CONFIG = {
+  OPENROUTER_API_KEY: "sk-or-v1-...",   // from openrouter.ai/keys
+  GAS_URL: "https://script.google.com/macros/s/.../exec",
+  DEFAULT_AI_MODEL: "openai/gpt-4o-mini",
+};
+```
 
----
-
-## Customizing the Event
-
-### Change Event Name
-Search and replace `RunTrack` in all HTML files with your event name.
-
-### Change Distance Categories
-In `index.html`, find the `.distances-grid` section and edit the distance cards.
-
-### Add/Remove Fields
-1. Add the field to `HEADERS` array in `Code.gs`
-2. Update `handleSubmit()` to capture the new field
-3. Add the field to the form in `upload.html`
-4. Update the table in `leaderboard.html`
+> **Note:** Values set via the in-page "API Config" panel (stored in `localStorage`) take priority over `config.js`, so users can override without editing files.
 
 ---
 
-## Troubleshooting
+## Google Apps Script Setup
 
-**AI extraction returns empty fields**
-- Make sure your screenshot clearly shows all stats
-- Try a different AI model (GPT-4o is most accurate)
-- Check that your OpenRouter API key has credit
-
-**Leaderboard shows no data**
-- Verify your Apps Script URL is correct
-- Make sure the Web App is deployed with "Anyone" access
-- Check the browser console for CORS errors
-- Try redeploying the Apps Script as a new deployment
-
-**Data not appearing in Google Sheets**
-- Confirm the deployment is "Execute as: Me" and "Who has access: Anyone"
-- Check the Apps Script execution logs: View → Executions
+1. Go to [Google Sheets](https://sheets.google.com) and create a new spreadsheet.
+2. Open **Extensions → Apps Script** .
+3. Replace the default code with the contents of `Code.gs`.
+4. Click **Deploy → New deployment**.
+   - Type: **Web App**
+   - Execute as: **Me**
+   - Who has access: **Anyone**
+5. Click **Deploy** and copy the **Web App URL** (e.g. `https://script.google.com/macros/s/AKfyc.../exec`).
+6. Paste this URL into `config.js` as `GAS_URL`.
 
 ---
 
-## Cost Estimate
+## Deploy to Vercel
 
-| Component | Cost |
-|-----------|------|
-| Google Sheets | Free |
-| Google Apps Script | Free (up to 6 min/execution, 100 deployments/day) |
-| Frontend Hosting (Netlify/GitHub Pages) | Free |
-| OpenRouter GPT-4o Mini | ~$0.0003 per photo upload |
-| **100 submissions** | **~$0.03 total** |
+Vercel serves static files directly — no build step needed.
+
+### Prerequisites
+
+- A free [Vercel account](https://vercel.com/signup)
+- [Git](https://git-scm.com/) installed
+- [Node.js](https://nodejs.org/) installed (for the Vercel CLI)
 
 ---
 
-## Tech Stack
+### Option A — Deploy via Vercel Dashboard (Recommended)
 
-- **Frontend:** Plain HTML5 + CSS3 + Vanilla JavaScript
-- **AI Vision:** OpenRouter API (GPT-4o Mini / Gemini / Claude)
-- **Database:** Google Sheets
-- **Backend:** Google Apps Script (serverless)
-- **Hosting:** Any static file host
+1. **Push your project to GitHub**
 
-No Node.js, no build tools, no dependencies. Just open and go.
-# kyndryl-virtual-running
+   ```bash
+   cd /path/to/kyndryl_VirtualRun
+   git init
+   git add .
+   git commit -m "Initial commit"
+   ```
+
+   Create a new repo on [github.com/new](https://github.com/new), then:
+
+   ```bash
+   git remote add origin https://github.com/<your-username>/<repo-name>.git
+   git push -u origin main
+   ```
+
+2. **Import project on Vercel**
+
+   - Go to [vercel.com/new](https://vercel.com/new)
+   - Click **"Import Git Repository"** and select your repo
+   - Framework Preset: **Other** (leave blank — it's a static site)
+   - Root Directory: `/` (default)
+   - Click **Deploy**
+
+3. **Done!** Vercel assigns a URL like `https://kyndryl-virtual-run.vercel.app`.
+
+---
+
+### Option B — Deploy via Vercel CLI
+
+1. **Install Vercel CLI**
+
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Log in**
+
+   ```bash
+   vercel login
+   ```
+
+3. **Deploy from project directory**
+
+   ```bash
+   cd /path/to/kyndryl_VirtualRun
+   vercel
+   ```
+
+   When prompted:
+   - **Set up and deploy**: `Y`
+   - **Project name**: press Enter (or set a custom name)
+   - **Root directory**: `./` (press Enter)
+   - **Override settings**: `N`
+
+4. **Deploy to production**
+
+   ```bash
+   vercel --prod
+   ```
+
+   The command prints your production URL.
+
+---
+
+### Custom Domain (Optional)
+
+1. In the Vercel dashboard, open your project → **Settings → Domains**.
+2. Click **Add** and enter your domain.
+3. Follow Vercel's DNS instructions (add a CNAME or A record at your registrar).
+
+---
+
+### Re-deployment
+
+Every `git push` to your main branch automatically triggers a new deployment if you linked a Git repo. If using the CLI, run `vercel --prod` again after changes.
+
+---
+
+## Local Development
+
+No build tools required — open any HTML file directly in your browser, or use a simple local server:
+
+```bash
+npx serve .
+# or
+python3 -m http.server 3000
+```
+
+Then open `http://localhost:3000`.
+
+---
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Vanilla HTML / CSS / JS |
+| AI Vision | [OpenRouter](https://openrouter.ai) API |
+| Backend | Google Apps Script |
+| Database | Google Sheets |
+| Hosting | Vercel (static) |
+
+---
+
+## License
+
+MIT

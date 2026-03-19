@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RunTrack — Virtual Running Event</title>
+  <title>Kyndryl Virtual Running Event</title>
   <script>
     (function () {
       try {
@@ -34,16 +35,21 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,85,0,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,85,0,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(255, 85, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 85, 0, 0.04) 1px, transparent 1px);
       background-size: 60px 60px;
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
       animation: gridScroll 20s linear infinite;
     }
 
     @keyframes gridScroll {
-      from { background-position: 0 0; }
-      to { background-position: 60px 60px; }
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 60px 60px;
+      }
     }
 
     /* Orange glow center-right */
@@ -54,7 +60,7 @@
       top: 30%;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(255,85,0,0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255, 85, 0, 0.08) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -69,7 +75,7 @@
       align-items: center;
       gap: 0.5rem;
       background: var(--orange-dim);
-      border: 1px solid rgba(255,85,0,0.3);
+      border: 1px solid rgba(255, 85, 0, 0.3);
       border-radius: 2px;
       padding: 0.35rem 0.85rem;
       font-family: 'Barlow Condensed', sans-serif;
@@ -91,8 +97,17 @@
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.7); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.7);
+      }
     }
 
     .hero-title {
@@ -149,37 +164,55 @@
     }
 
     .stat-card:nth-child(1) {
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 200px;
       animation: float1 4s ease-in-out infinite;
     }
 
     .stat-card:nth-child(2) {
-      top: 60px; right: 0;
+      top: 60px;
+      right: 0;
       width: 180px;
       animation: float2 5s ease-in-out infinite;
     }
 
     .stat-card:nth-child(3) {
-      bottom: 30px; left: 20px;
+      bottom: 30px;
+      left: 20px;
       width: 220px;
       animation: float1 6s ease-in-out infinite reverse;
     }
 
     .stat-card:nth-child(4) {
-      bottom: 80px; right: 20px;
+      bottom: 80px;
+      right: 20px;
       width: 140px;
       animation: float2 3.5s ease-in-out infinite;
     }
 
     @keyframes float1 {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
     @keyframes float2 {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(6px); }
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(6px);
+      }
     }
 
     .stat-label {
@@ -198,9 +231,17 @@
       line-height: 1;
     }
 
-    .stat-value.orange { color: var(--orange); }
-    .stat-value.mint { color: var(--mint); }
-    .stat-value.white { color: var(--text); }
+    .stat-value.orange {
+      color: var(--orange);
+    }
+
+    .stat-value.mint {
+      color: var(--mint);
+    }
+
+    .stat-value.white {
+      color: var(--text);
+    }
 
     .stat-sub {
       font-size: 0.8rem;
@@ -309,9 +350,9 @@
     }
 
     .distance-card:hover {
-      border-color: rgba(255,85,0,0.3);
+      border-color: rgba(255, 85, 0, 0.3);
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
     }
 
     .distance-km {
@@ -354,7 +395,7 @@
       transform: translateX(-50%);
       width: 800px;
       height: 400px;
-      background: radial-gradient(ellipse, rgba(255,85,0,0.06) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(255, 85, 0, 0.06) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -385,178 +426,204 @@
     }
 
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
-      .hero-right { display: none; }
-      .steps-grid { grid-template-columns: 1fr; }
-      .distances-grid { grid-template-columns: repeat(2, 1fr); }
-      .how-section, .distances-section, .cta-section { padding: 3rem 1.5rem; }
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 3rem 1.5rem;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .distances-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .how-section,
+      .distances-section,
+      .cta-section {
+        padding: 3rem 1.5rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">Run<span>Track</span></a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="upload.html">Upload Result</a></li>
-      <li><a href="leaderboard.html">Leaderboard</a></li>
-    </ul>
-    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">
-      <span class="theme-toggle-icon" aria-hidden="true">☀</span>
-      <span class="theme-toggle-text">
-        <span class="theme-toggle-label">Theme</span>
-        <span class="theme-toggle-value">Light</span>
-      </span>
-    </button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="event-tag">Virtual Event · Open Registration</div>
-    <h1 class="hero-title">
-      Push Your
-      <span class="accent">Limits.</span>
-      Log Your Run.
-    </h1>
-    <p class="hero-subtitle">
-      Complete your distance, screenshot your result from any running app,
-      and upload it here. Our AI reads your stats automatically.
-      Compete with runners worldwide — no finish line, no excuses.
-    </p>
-    <div class="hero-actions">
-      <a href="upload.html" class="btn btn-primary btn-lg">📤 Submit Your Run</a>
-      <a href="leaderboard.html" class="btn btn-outline btn-lg">🏆 View Rankings</a>
+  <nav>
+    <a href="index.html" class="nav-logo">Run<span>Track</span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="upload.html">Upload Result</a></li>
+        <li><a href="leaderboard.html">Leaderboard</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">
+        <span class="theme-toggle-icon" aria-hidden="true">☀</span>
+        <span class="theme-toggle-text">
+          <span class="theme-toggle-label">Theme</span>
+          <span class="theme-toggle-value">Light</span>
+        </span>
+      </button>
     </div>
-  </div>
+  </nav>
 
-  <div class="hero-right">
-    <div class="stats-cluster">
-      <div class="stat-card">
-        <div class="stat-label">Top Distance</div>
-        <div class="stat-value mint">42.2</div>
-        <div class="stat-sub">km · Marathon</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Best Pace</div>
-        <div class="stat-value orange">4:32</div>
-        <div class="stat-sub">min / km</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Registered Runners</div>
-        <div class="stat-value white" id="runner-count">—</div>
-        <div class="stat-sub">from the leaderboard</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Status</div>
-        <div class="stat-value orange" style="font-size:1.8rem">LIVE</div>
-        <div class="stat-sub">Now accepting entries</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="event-tag">Virtual Event · Open Registration</div>
+      <h1 class="hero-title">
+        Push Your
+        <span class="accent">Limits.</span>
+        Log Your Run.
+      </h1>
+      <p class="hero-subtitle">
+        Complete your distance, screenshot your result from any running app,
+        and upload it here. Our AI reads your stats automatically.
+        Compete with runners worldwide — no finish line, no excuses.
+      </p>
+      <div class="hero-actions">
+        <a href="upload.html" class="btn btn-primary btn-lg">📤 Submit Your Run</a>
+        <a href="leaderboard.html" class="btn btn-outline btn-lg">🏆 View Rankings</a>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- HOW IT WORKS -->
-<section class="how-section">
-  <div class="container">
-    <div class="section-label">How it works</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;">
-      Three Steps to the Board
-    </h2>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-number">01</div>
-        <div class="step-icon">🏃‍♂️</div>
-        <div class="step-title">Complete Your Run</div>
-        <div class="step-desc">
-          Run any distance using Garmin, Strava, Apple Watch, Nike Run, or any tracking app. No minimum distance required.
+    <div class="hero-right">
+      <div class="stats-cluster">
+        <div class="stat-card">
+          <div class="stat-label">Top Distance</div>
+          <div class="stat-value mint">42.2</div>
+          <div class="stat-sub">km · Marathon</div>
         </div>
-      </div>
-      <div class="step">
-        <div class="step-number">02</div>
-        <div class="step-icon">📸</div>
-        <div class="step-title">Screenshot Your Stats</div>
-        <div class="step-desc">
-          Take a screenshot of your result screen showing your name, distance, pace, time, and date. Mixed app types are accepted.
+        <div class="stat-card">
+          <div class="stat-label">Best Pace</div>
+          <div class="stat-value orange">4:32</div>
+          <div class="stat-sub">min / km</div>
         </div>
-      </div>
-      <div class="step">
-        <div class="step-number">03</div>
-        <div class="step-icon">🤖</div>
-        <div class="step-title">AI Reads Your Data</div>
-        <div class="step-desc">
-          Upload the photo. Our AI automatically extracts all your stats. Review, confirm, and your result lands on the leaderboard instantly.
+        <div class="stat-card">
+          <div class="stat-label">Registered Runners</div>
+          <div class="stat-value white" id="runner-count">—</div>
+          <div class="stat-sub">from the leaderboard</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Status</div>
+          <div class="stat-value orange" style="font-size:1.8rem">LIVE</div>
+          <div class="stat-sub">Now accepting entries</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- DISTANCE CATEGORIES -->
-<section class="distances-section">
-  <div class="container">
-    <div class="section-label">Distance Categories</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;">
-      Any Distance Counts
-    </h2>
-    <div class="distances-grid">
-      <div class="distance-card">
-        <div class="distance-km">5</div>
-        <div class="distance-unit">KM</div>
-        <div class="distance-name">Fun Run</div>
-      </div>
-      <div class="distance-card">
-        <div class="distance-km">10</div>
-        <div class="distance-unit">KM</div>
-        <div class="distance-name">10K Classic</div>
-      </div>
-      <div class="distance-card">
-        <div class="distance-km">21.1</div>
-        <div class="distance-unit">KM</div>
-        <div class="distance-name">Half Marathon</div>
-      </div>
-      <div class="distance-card">
-        <div class="distance-km">42.2</div>
-        <div class="distance-unit">KM</div>
-        <div class="distance-name">Full Marathon</div>
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-label">How it works</div>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;">
+        Three Steps to the Board
+      </h2>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">01</div>
+          <div class="step-icon">🏃‍♂️</div>
+          <div class="step-title">Complete Your Run</div>
+          <div class="step-desc">
+            Run any distance using Garmin, Strava, Apple Watch, Nike Run, or any tracking app. No minimum distance
+            required.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <div class="step-icon">📸</div>
+          <div class="step-title">Screenshot Your Stats</div>
+          <div class="step-desc">
+            Take a screenshot of your result screen showing your name, distance, pace, time, and date. Mixed app types
+            are accepted.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <div class="step-icon">🤖</div>
+          <div class="step-title">AI Reads Your Data</div>
+          <div class="step-desc">
+            Upload the photo. Our AI automatically extracts all your stats. Review, confirm, and your result lands on
+            the leaderboard instantly.
+          </div>
+        </div>
       </div>
     </div>
-    <p style="margin-top:1.5rem; color:var(--text-muted); font-size:0.9rem; text-align:center;">
-      Any distance is welcome! The leaderboard ranks by longest distance completed.
-    </p>
-  </div>
-</section>
+  </section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <h2 class="cta-title">Ready to Race?</h2>
-  <p class="cta-sub">Upload your result and claim your spot on the global leaderboard.</p>
-  <div class="cta-actions">
-    <a href="upload.html" class="btn btn-primary btn-lg">Submit Your Run →</a>
-    <a href="leaderboard.html" class="btn btn-ghost btn-lg">View Leaderboard</a>
-  </div>
-</section>
+  <!-- DISTANCE CATEGORIES -->
+  <section class="distances-section">
+    <div class="container">
+      <div class="section-label">Distance Categories</div>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;">
+        Any Distance Counts
+      </h2>
+      <div class="distances-grid">
+        <div class="distance-card">
+          <div class="distance-km">5</div>
+          <div class="distance-unit">KM</div>
+          <div class="distance-name">Fun Run</div>
+        </div>
+        <div class="distance-card">
+          <div class="distance-km">10</div>
+          <div class="distance-unit">KM</div>
+          <div class="distance-name">10K Classic</div>
+        </div>
+        <div class="distance-card">
+          <div class="distance-km">21.1</div>
+          <div class="distance-unit">KM</div>
+          <div class="distance-name">Half Marathon</div>
+        </div>
+        <div class="distance-card">
+          <div class="distance-km">42.2</div>
+          <div class="distance-unit">KM</div>
+          <div class="distance-name">Full Marathon</div>
+        </div>
+      </div>
+      <p style="margin-top:1.5rem; color:var(--text-muted); font-size:0.9rem; text-align:center;">
+        Any distance is welcome! The leaderboard ranks by longest distance completed.
+      </p>
+    </div>
+  </section>
 
-<footer>
-  <p>RunTrack Virtual Event &nbsp;·&nbsp; Powered by AI + Google Sheets &nbsp;·&nbsp;
-     Built with ❤️ for runners everywhere</p>
-</footer>
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to Race?</h2>
+    <p class="cta-sub">Upload your result and claim your spot on the global leaderboard.</p>
+    <div class="cta-actions">
+      <a href="upload.html" class="btn btn-primary btn-lg">Submit Your Run →</a>
+      <a href="leaderboard.html" class="btn btn-ghost btn-lg">View Leaderboard</a>
+    </div>
+  </section>
 
+  <footer>
+    <p>RunTrack Virtual Event &nbsp;·&nbsp; Powered by AI + Google Sheets &nbsp;·&nbsp;
+      Built with ❤️ for runners everywhere</p>
+  </footer>
+
+  <script src="config.js"></script>
 <script src="theme.js"></script>
 <script>
-  // Fetch runner count from leaderboard
-  const GAS_URL = localStorage.getItem('gasUrl');
+  // Fetch runner count from leaderboard — uses config.js getConfig() helper
+  const GAS_URL = getConfig('GAS_URL');
   if (GAS_URL) {
     fetch(`${GAS_URL}?action=leaderboard`)
       .then(r => r.json())
       .then(data => {
-        document.getElementById('runner-count').textContent = Array.isArray(data) ? data.length : '—';
+        if (!Array.isArray(data)) return;
+        // Aggregate unique runners
+        const unique = new Set(data.map(r => (r.name || '').trim().toLowerCase()));
+        document.getElementById('runner-count').textContent = unique.size || data.length;
       })
       .catch(() => {});
   }
 </script>
 </body>
+
 </html>

@@ -7,9 +7,9 @@
   <script>
     (function () {
       try {
-        var theme = localStorage.getItem('runtrack-theme');
-        document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-      } catch (error) {
+        var t = localStorage.getItem('runtrack-theme');
+        document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+      } catch (e) {
         document.documentElement.setAttribute('data-theme', 'light');
       }
     }());
@@ -18,7 +18,7 @@
   <style>
     /* ── PAGE HEADER ── */
     .page-header {
-      padding: 3rem 3rem 2rem;
+      padding: 2rem 2rem 1.5rem;
       border-bottom: 1px solid var(--border);
       position: relative;
       z-index: 1;
@@ -26,33 +26,31 @@
       justify-content: space-between;
       align-items: flex-end;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .page-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.5rem;
+      font-size: 2.8rem;
       letter-spacing: 2px;
       line-height: 1;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
-    .page-sub {
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
+    .page-sub { color: var(--text-muted); font-size: 0.9rem; }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
 
-    .refresh-indicator {
+    .live-indicator {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
+      gap: 0.4rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
       font-family: 'Barlow Condensed', sans-serif;
       letter-spacing: 1px;
@@ -67,36 +65,34 @@
       animation: pulse 2s ease-in-out infinite;
     }
 
-    /* ── CONFIG SETUP ── */
+    /* ── SETUP PANEL ── */
     #setup-panel {
-      margin: 2rem 3rem;
+      margin: 1.5rem 2rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2rem;
-      max-width: 600px;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      max-width: 560px;
       position: relative;
       z-index: 1;
     }
 
     #setup-panel h3 {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
-    .setup-form {
+    .setup-row {
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
       align-items: flex-end;
     }
 
-    .setup-form .form-group {
-      flex: 1;
-    }
+    .setup-row .form-group { flex: 1; }
 
     /* ── STATS BAR ── */
     .stats-bar {
@@ -108,34 +104,34 @@
     }
 
     .stat-item {
-      padding: 1.5rem 2rem;
+      padding: 1.25rem 1.5rem;
       border-right: 1px solid var(--border);
     }
 
     .stat-item:last-child { border-right: none; }
 
     .stat-item-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.25rem;
     }
 
     .stat-item-value {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
+      font-size: 1.9rem;
       letter-spacing: 1px;
       line-height: 1;
     }
 
     .stat-item-value.orange { color: var(--orange); }
-    .stat-item-value.mint { color: var(--mint); }
+    .stat-item-value.mint   { color: var(--mint); }
 
-    /* ── PODIUM (TOP 3) ── */
+    /* ── PODIUM ── */
     .podium-section {
-      padding: 2.5rem 3rem;
+      padding: 2rem 2rem;
       border-bottom: 1px solid var(--border);
       position: relative;
       z-index: 1;
@@ -144,59 +140,36 @@
     .podium-grid {
       display: grid;
       grid-template-columns: 1fr 1.1fr 1fr;
-      gap: 1rem;
+      gap: 0.75rem;
       align-items: end;
-      max-width: 900px;
-      margin: 1.5rem auto 0;
+      max-width: 700px;
+      margin: 1.25rem auto 0;
     }
 
     .podium-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 1.5rem;
+      padding: 1.25rem 1rem;
       text-align: center;
-      position: relative;
-      overflow: hidden;
       transition: transform 0.25s;
     }
 
-    .podium-card:hover { transform: translateY(-4px); }
+    .podium-card:hover { transform: translateY(-3px); }
+    .podium-card.first { border-color: rgba(255,209,102,0.35); background: linear-gradient(135deg, var(--bg-card), rgba(255,209,102,0.04)); }
+    .podium-card.second { border-color: rgba(184,196,206,0.3); }
+    .podium-card.third  { border-color: rgba(201,132,90,0.3); }
 
-    .podium-card.first {
-      border-color: rgba(255,209,102,0.35);
-      background: linear-gradient(135deg, var(--bg-card), rgba(255,209,102,0.05));
-    }
-
-    .podium-card.second {
-      border-color: rgba(184,196,206,0.3);
-    }
-
-    .podium-card.third {
-      border-color: rgba(201,132,90,0.3);
-    }
-
-    .podium-medal {
-      font-size: 2.5rem;
-      display: block;
-      margin-bottom: 0.75rem;
-    }
-
-    .podium-rank {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 3px;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
+    .podium-medal { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+    .podium-rank  { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 3px; color: var(--text-muted); margin-bottom: 0.3rem; }
 
     .podium-name {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -204,7 +177,7 @@
 
     .podium-distance {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8rem;
+      font-size: 2.4rem;
       letter-spacing: 1px;
       line-height: 1;
       color: var(--orange);
@@ -213,42 +186,24 @@
     .podium-card.first .podium-distance { color: var(--gold); }
 
     .podium-distance-unit {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       font-family: 'Barlow Condensed', sans-serif;
       letter-spacing: 2px;
       text-transform: uppercase;
+      margin-bottom: 0.4rem;
     }
 
-    .podium-details {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .podium-stat {
+    .podium-runs {
       font-size: 0.78rem;
       color: var(--text-muted);
-    }
-
-    .podium-stat strong {
-      color: var(--text);
-      display: block;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
       letter-spacing: 1px;
     }
 
-    /* Podium height effect */
-    .podium-grid > :nth-child(1) { padding-bottom: 0.5rem; }   /* 2nd */
-    .podium-grid > :nth-child(2) { padding-bottom: 1.5rem; }   /* 1st */
-
     /* ── TABLE ── */
     .table-section {
-      padding: 2rem 3rem;
+      padding: 1.5rem 2rem;
       position: relative;
       z-index: 1;
     }
@@ -257,35 +212,29 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
 
     .table-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
+      font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--text-muted);
     }
 
-    .search-input {
-      width: 220px;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-    }
+    .search-input { width: 200px; padding: 0.45rem 0.85rem; font-size: 0.88rem; }
 
-    .leaderboard-table {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
+    .leaderboard-table { width: 100%; border-collapse: collapse; }
 
     .leaderboard-table thead th {
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 0.85rem;
       text-align: left;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
@@ -294,9 +243,7 @@
       white-space: nowrap;
     }
 
-    .leaderboard-table thead th.sort-active {
-      color: var(--orange);
-    }
+    .leaderboard-table thead th.sort-active { color: var(--orange); }
 
     .leaderboard-table tbody tr {
       border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -304,80 +251,58 @@
       animation: rowIn 0.3s ease both;
     }
 
-    .leaderboard-table tbody tr:hover {
-      background: var(--bg-card);
-    }
+    .leaderboard-table tbody tr:hover { background: var(--bg-card); }
 
     @keyframes rowIn {
-      from { opacity: 0; transform: translateX(-10px); }
+      from { opacity: 0; transform: translateX(-8px); }
       to   { opacity: 1; transform: translateX(0); }
     }
 
     .leaderboard-table tbody td {
-      padding: 1rem 1rem;
-      font-size: 0.95rem;
+      padding: 0.85rem 0.85rem;
+      font-size: 0.92rem;
       vertical-align: middle;
     }
 
-    /* Rank column */
-    .col-rank {
-      width: 60px;
-      text-align: center;
-    }
+    .col-rank { width: 50px; text-align: center; }
+    .rank-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 1px; color: var(--text-muted); }
+    .rank-medal { font-size: 1.3rem; }
 
-    .rank-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
-      letter-spacing: 1px;
-      color: var(--text-muted);
-    }
-
-    .rank-medal {
-      font-size: 1.4rem;
-    }
-
-    /* Name column */
     .col-name {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
 
-    /* Distance column */
     .col-distance {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       letter-spacing: 1px;
       color: var(--mint);
     }
 
     .col-distance span {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       letter-spacing: 1.5px;
       color: var(--text-muted);
       margin-left: 2px;
     }
 
-    /* Pace column */
-    .col-pace {
+    .col-runs {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .col-muted {
+      font-size: 0.88rem;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      letter-spacing: 0.5px;
     }
 
-    /* Distance bar */
+    .col-muted { color: var(--text-muted); font-size: 0.88rem; }
+
     .distance-bar-wrap {
-      width: 120px;
-      height: 4px;
+      width: 100px;
+      height: 3px;
       background: rgba(255,255,255,0.06);
       border-radius: 2px;
       overflow: hidden;
@@ -391,65 +316,54 @@
       transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* ── EMPTY STATE ── */
+    /* ── EMPTY / LOADING ── */
     #empty-state {
       text-align: center;
-      padding: 5rem 2rem;
+      padding: 4rem 1.5rem;
       display: none;
       position: relative;
       z-index: 1;
     }
 
-    #empty-state .empty-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-    }
+    #empty-state .empty-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
+    #empty-state h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
+    #empty-state p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.9rem; }
 
-    #empty-state h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-      margin-bottom: 0.75rem;
-    }
-
-    #empty-state p {
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-
-    /* ── LOADING ── */
     #loading-state {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 5rem;
+      padding: 4rem;
       gap: 1rem;
       position: relative;
       z-index: 1;
     }
 
-    #loading-state p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-    }
+    #loading-state p { color: var(--text-muted); font-size: 0.88rem; letter-spacing: 1px; }
 
-    /* ── AUTO REFRESH ── */
-    .countdown {
-      font-variant-numeric: tabular-nums;
-    }
-
-    @media (max-width: 900px) {
-      .page-header { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .page-header { padding: 1.25rem 1rem; flex-direction: column; align-items: flex-start; }
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
-      .podium-section, .table-section { padding: 2rem 1.5rem; }
-      .podium-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .stat-item { padding: 1rem; }
+      .podium-section { padding: 1.25rem 1rem; }
+      .podium-grid { grid-template-columns: 1fr; max-width: 320px; }
       .podium-grid > * { padding-bottom: 0 !important; }
       .podium-grid > :nth-child(2) { order: -1; }
+      .table-section { padding: 1rem; }
       .search-input { width: 100%; }
-      .table-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      #setup-panel { margin: 1.5rem; }
+      .table-header { flex-direction: column; align-items: flex-start; }
+      #setup-panel { margin: 1rem; }
+      .setup-row { flex-direction: column; }
+      /* Hide less important columns on mobile */
+      .leaderboard-table thead th:nth-child(4),
+      .leaderboard-table tbody td:nth-child(4) { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .page-title { font-size: 2.2rem; }
+      .stat-item-value { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -460,10 +374,10 @@
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="upload.html">Upload Result</a></li>
+      <li><a href="upload.html">Upload</a></li>
       <li><a href="leaderboard.html" class="active">Leaderboard</a></li>
     </ul>
-    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">
+    <button class="theme-toggle" type="button" aria-label="Toggle theme">
       <span class="theme-toggle-icon" aria-hidden="true">☀</span>
       <span class="theme-toggle-text">
         <span class="theme-toggle-label">Theme</span>
@@ -476,27 +390,27 @@
 <!-- PAGE HEADER -->
 <div class="page-header">
   <div>
-    <div class="section-label">Ranked by Longest Distance</div>
+    <div class="section-label">Ranked by Total Distance</div>
     <h1 class="page-title">Leaderboard</h1>
-    <p class="page-sub">Top runners from around the world &mdash; updated in real time.</p>
+    <p class="page-sub">Cumulative distance across all submitted runs — updated live.</p>
   </div>
   <div class="header-right">
-    <div class="refresh-indicator">
+    <div class="live-indicator">
       <div class="live-dot"></div>
-      Auto-refresh in <span class="countdown" id="countdown">60</span>s
+      Refresh in <span id="countdown" style="font-variant-numeric:tabular-nums;">60</span>s
     </div>
     <button class="btn btn-ghost" onclick="loadLeaderboard()">⟳ Refresh</button>
     <a href="upload.html" class="btn btn-primary">📤 Submit Run</a>
   </div>
 </div>
 
-<!-- SETUP PANEL (shown if no URL saved) -->
+<!-- SETUP PANEL -->
 <div id="setup-panel" style="display:none;">
   <h3>⚙️ Connect to Google Sheets</h3>
-  <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.25rem;">
+  <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:1rem;">
     Enter your Google Apps Script URL to load leaderboard data.
   </p>
-  <div class="setup-form">
+  <div class="setup-row">
     <div class="form-group">
       <label>Google Apps Script URL</label>
       <input type="url" id="setup-gas-url" placeholder="https://script.google.com/macros/s/.../exec" />
@@ -508,19 +422,19 @@
 <!-- STATS BAR -->
 <div class="stats-bar" id="stats-bar" style="display:none;">
   <div class="stat-item">
-    <div class="stat-item-label">Total Runners</div>
+    <div class="stat-item-label">Runners</div>
     <div class="stat-item-value" id="stat-runners">—</div>
   </div>
   <div class="stat-item">
-    <div class="stat-item-label">Top Distance</div>
+    <div class="stat-item-label">Top Total</div>
     <div class="stat-item-value mint" id="stat-top-dist">—</div>
   </div>
   <div class="stat-item">
-    <div class="stat-item-label">Best Pace</div>
-    <div class="stat-item-value orange" id="stat-best-pace">—</div>
+    <div class="stat-item-label">Total Runs</div>
+    <div class="stat-item-value orange" id="stat-total-runs">—</div>
   </div>
   <div class="stat-item">
-    <div class="stat-item-label">Total km Run</div>
+    <div class="stat-item-label">Total km</div>
     <div class="stat-item-value" id="stat-total-km">—</div>
   </div>
 </div>
@@ -533,8 +447,8 @@
 
 <!-- LOADING -->
 <div id="loading-state">
-  <div class="spinner" style="width:36px;height:36px;border-width:3px;"></div>
-  <p>Loading leaderboard data...</p>
+  <div class="spinner" style="width:32px;height:32px;border-width:3px;"></div>
+  <p>Loading leaderboard...</p>
 </div>
 
 <!-- TABLE -->
@@ -550,10 +464,9 @@
       <tr>
         <th class="col-rank">#</th>
         <th>Runner</th>
-        <th class="sort-active">Distance ↓</th>
-        <th>Pace</th>
-        <th>Time</th>
-        <th>Date</th>
+        <th class="sort-active">Total km ↓</th>
+        <th>Runs</th>
+        <th>Best Pace</th>
       </tr>
     </thead>
     <tbody id="table-body"></tbody>
@@ -565,19 +478,20 @@
   <div class="empty-icon">🏁</div>
   <h3>No Runners Yet</h3>
   <p>Be the first to submit your run!</p>
-  <a href="upload.html" class="btn btn-primary btn-lg">Submit Your Run →</a>
+  <a href="upload.html" class="btn btn-primary">Submit Your Run →</a>
 </div>
 
+<script src="config.js"></script>
 <script src="theme.js"></script>
 <script>
-  let allRunners = [];
+  let allRunners = [];     // aggregated per-person
   let countdownTimer;
   let countdownValue = 60;
-  let maxDistance = 0;
+  let maxTotalDist   = 0;
 
   // ── INIT ──
   window.addEventListener('load', () => {
-    const gasUrl = localStorage.getItem('gasUrl');
+    const gasUrl = getConfig('GAS_URL');
     if (!gasUrl) {
       document.getElementById('setup-panel').style.display = 'block';
       document.getElementById('loading-state').style.display = 'none';
@@ -599,17 +513,17 @@
 
   // ── LOAD DATA ──
   async function loadLeaderboard() {
-    const gasUrl = localStorage.getItem('gasUrl');
+    const gasUrl = getConfig('GAS_URL');
     if (!gasUrl) return;
 
-    document.getElementById('loading-state').style.display = 'flex';
-    document.getElementById('table-section').style.display = 'none';
-    document.getElementById('podium-section').style.display = 'none';
-    document.getElementById('stats-bar').style.display = 'none';
-    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('loading-state').style.display    = 'flex';
+    document.getElementById('table-section').style.display    = 'none';
+    document.getElementById('podium-section').style.display   = 'none';
+    document.getElementById('stats-bar').style.display        = 'none';
+    document.getElementById('empty-state').style.display      = 'none';
 
     try {
-      const res = await fetch(`${gasUrl}?action=leaderboard&t=${Date.now()}`);
+      const res  = await fetch(`${gasUrl}?action=leaderboard&t=${Date.now()}`);
       const data = await res.json();
 
       document.getElementById('loading-state').style.display = 'none';
@@ -619,74 +533,80 @@
         return;
       }
 
-      // Sort by distance descending
-      allRunners = data.sort((a, b) => parseFloat(b.distance) - parseFloat(a.distance));
-      maxDistance = parseFloat(allRunners[0].distance) || 1;
+      // ── AGGREGATE by person name (case-insensitive) ──
+      const map = {};
+      data.forEach(row => {
+        const key  = (row.name || 'Unknown').trim().toLowerCase();
+        const dist = parseFloat(row.distance) || 0;
+        if (!map[key]) {
+          map[key] = {
+            name:     (row.name || 'Unknown').trim(),
+            totalKm:  0,
+            runs:     0,
+            bestPace: null,
+          };
+        }
+        map[key].totalKm += dist;
+        map[key].runs    += 1;
 
-      renderStats(allRunners);
+        // Track best (lowest) pace
+        if (row.pace && /^\d+:\d+$/.test(row.pace)) {
+          const [m, s] = row.pace.split(':').map(Number);
+          const secs   = m * 60 + s;
+          if (map[key].bestPace === null || secs < map[key].bestPace) {
+            map[key].bestPace = secs;
+          }
+        }
+      });
+
+      // Sort by totalKm descending
+      allRunners = Object.values(map).sort((a, b) => b.totalKm - a.totalKm);
+      maxTotalDist = allRunners[0]?.totalKm || 1;
+
+      renderStats(allRunners, data.length);
       renderPodium(allRunners.slice(0, 3));
       renderTable(allRunners);
 
-      document.getElementById('stats-bar').style.display = 'grid';
+      document.getElementById('stats-bar').style.display      = 'grid';
       document.getElementById('podium-section').style.display = 'block';
-      document.getElementById('table-section').style.display = 'block';
+      document.getElementById('table-section').style.display  = 'block';
 
     } catch (err) {
       console.error(err);
       document.getElementById('loading-state').style.display = 'none';
-      document.getElementById('empty-state').style.display = 'block';
+      document.getElementById('empty-state').style.display   = 'block';
       document.getElementById('empty-state').querySelector('p').textContent =
         'Failed to load data. Check your Apps Script URL.';
     }
   }
 
   // ── RENDER STATS ──
-  function renderStats(runners) {
-    const totalDist = runners.reduce((s, r) => s + (parseFloat(r.distance) || 0), 0);
-
-    // Best pace calculation
-    const paces = runners
-      .map(r => r.pace)
-      .filter(p => p && /^\d+:\d+$/.test(p))
-      .map(p => {
-        const [m, s] = p.split(':').map(Number);
-        return m * 60 + s;
-      });
-    const bestPaceSec = paces.length ? Math.min(...paces) : null;
-    const bestPaceStr = bestPaceSec
-      ? `${Math.floor(bestPaceSec / 60)}:${String(bestPaceSec % 60).padStart(2, '0')}`
-      : '—';
-
-    document.getElementById('stat-runners').textContent = runners.length;
-    document.getElementById('stat-top-dist').textContent =
-      parseFloat(runners[0].distance).toFixed(1) + ' km';
-    document.getElementById('stat-best-pace').textContent =
-      bestPaceSec ? bestPaceStr + '/km' : '—';
-    document.getElementById('stat-total-km').textContent = totalDist.toFixed(1) + ' km';
+  function renderStats(runners, totalRuns) {
+    const totalKm = runners.reduce((s, r) => s + r.totalKm, 0);
+    document.getElementById('stat-runners').textContent   = runners.length;
+    document.getElementById('stat-top-dist').textContent  = runners[0].totalKm.toFixed(1) + ' km';
+    document.getElementById('stat-total-runs').textContent = totalRuns;
+    document.getElementById('stat-total-km').textContent  = totalKm.toFixed(1) + ' km';
   }
 
   // ── RENDER PODIUM ──
   function renderPodium(top3) {
-    const medals = ['🥇', '🥈', '🥉'];
+    const medals  = ['🥇', '🥈', '🥉'];
     const classes = ['first', 'second', 'third'];
-    // Reorder: 2nd, 1st, 3rd for visual podium layout
-    const order = top3.length >= 3 ? [top3[1], top3[0], top3[2]] : top3;
+    // Visual order: 2nd, 1st, 3rd
+    const order        = top3.length >= 3 ? [top3[1], top3[0], top3[2]] : top3;
     const orderClasses = top3.length >= 3 ? [classes[1], classes[0], classes[2]] : classes;
-    const orderMedals = top3.length >= 3 ? [medals[1], medals[0], medals[2]] : medals;
-    const orderRanks = top3.length >= 3 ? [2, 1, 3] : [1, 2, 3];
+    const orderMedals  = top3.length >= 3 ? [medals[1], medals[0], medals[2]] : medals;
+    const orderRanks   = top3.length >= 3 ? [2, 1, 3] : [1, 2, 3];
 
     document.getElementById('podium-grid').innerHTML = order.map((runner, i) => `
       <div class="podium-card ${orderClasses[i]}">
         <span class="podium-medal">${orderMedals[i]}</span>
         <div class="podium-rank">RANK #${orderRanks[i]}</div>
-        <div class="podium-name" title="${runner.name}">${runner.name || 'Unknown'}</div>
-        <div class="podium-distance">${parseFloat(runner.distance).toFixed(2)}</div>
-        <div class="podium-distance-unit">km</div>
-        <div class="podium-details">
-          ${runner.pace ? `<div class="podium-stat"><strong>${runner.pace}</strong>pace/km</div>` : ''}
-          ${runner.time ? `<div class="podium-stat"><strong>${runner.time}</strong>time</div>` : ''}
-          ${runner.finish_date ? `<div class="podium-stat"><strong>${formatDate(runner.finish_date)}</strong>date</div>` : ''}
-        </div>
+        <div class="podium-name" title="${escapeHtml(runner.name)}">${escapeHtml(runner.name)}</div>
+        <div class="podium-distance">${runner.totalKm.toFixed(2)}</div>
+        <div class="podium-distance-unit">km total</div>
+        <div class="podium-runs">${runner.runs} run${runner.runs !== 1 ? 's' : ''}</div>
       </div>
     `).join('');
   }
@@ -696,51 +616,49 @@
     const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
 
     document.getElementById('table-body').innerHTML = runners.map((runner, i) => {
-      const rank = i + 1;
-      const distPct = Math.round((parseFloat(runner.distance) / maxDistance) * 100);
+      const rank    = i + 1;
+      const distPct = Math.round((runner.totalKm / maxTotalDist) * 100);
+      const paceStr = runner.bestPace !== null
+        ? `${Math.floor(runner.bestPace / 60)}:${String(runner.bestPace % 60).padStart(2, '0')}`
+        : '—';
 
       return `
-        <tr style="animation-delay:${Math.min(i * 0.03, 0.6)}s">
+        <tr style="animation-delay:${Math.min(i * 0.03, 0.5)}s">
           <td class="col-rank">
             ${rank <= 3
               ? `<span class="rank-medal">${medals[rank]}</span>`
-              : `<span class="rank-num">${rank}</span>`
-            }
+              : `<span class="rank-num">${rank}</span>`}
           </td>
-          <td class="col-name">${escapeHtml(runner.name || 'Unknown')}</td>
+          <td class="col-name">${escapeHtml(runner.name)}</td>
           <td>
-            <div class="col-distance">
-              ${parseFloat(runner.distance).toFixed(2)}<span>km</span>
-            </div>
+            <div class="col-distance">${runner.totalKm.toFixed(2)}<span>km</span></div>
             <div class="distance-bar-wrap">
               <div class="distance-bar" style="width:${distPct}%"></div>
             </div>
           </td>
-          <td class="col-pace">${runner.pace || '—'}</td>
-          <td class="col-muted">${runner.time || '—'}</td>
-          <td class="col-muted">${runner.finish_date ? formatDate(runner.finish_date) : '—'}</td>
+          <td class="col-runs">${runner.runs} run${runner.runs !== 1 ? 's' : ''}</td>
+          <td class="col-muted">${paceStr !== '—' ? paceStr + '/km' : '—'}</td>
         </tr>
       `;
     }).join('');
   }
 
-  // ── SEARCH / FILTER ──
+  // ── SEARCH ──
   function filterTable(query) {
     const q = query.toLowerCase();
     const filtered = q
-      ? allRunners.filter(r => (r.name || '').toLowerCase().includes(q))
+      ? allRunners.filter(r => r.name.toLowerCase().includes(q))
       : allRunners;
 
     if (filtered.length === 0) {
       document.getElementById('table-body').innerHTML = `
         <tr>
-          <td colspan="6" style="text-align:center; padding:3rem; color:var(--text-muted);">
-            No runners match "${query}"
+          <td colspan="5" style="text-align:center;padding:2.5rem;color:var(--text-muted);">
+            No runners match "${escapeHtml(query)}"
           </td>
         </tr>`;
       return;
     }
-
     renderTable(filtered);
   }
 
@@ -759,13 +677,6 @@
   }
 
   // ── HELPERS ──
-  function formatDate(d) {
-    if (!d) return '—';
-    try {
-      return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-    } catch { return d; }
-  }
-
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, c => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
