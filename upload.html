@@ -49,56 +49,6 @@
       margin-bottom: 2rem;
     }
 
-    /* ── CONFIG PANEL ── */
-    .config-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.25rem;
-    }
-
-    .config-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-muted);
-      padding: 0.4rem 0.85rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .config-toggle:hover { border-color: var(--border-active); color: var(--text); }
-
-    .config-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem;
-      margin-bottom: 1.5rem;
-      display: none;
-    }
-
-    .config-panel.open { display: block; }
-
-    .config-saved {
-      font-size: 0.8rem;
-      color: var(--mint);
-      opacity: 0;
-      transition: opacity 0.3s;
-      font-family: 'Barlow Condensed', sans-serif;
-      letter-spacing: 1px;
-    }
-
-    .config-saved.show { opacity: 1; }
-
     /* ── DROP ZONE ── */
     .drop-zone {
       border: 2px dashed var(--border);
@@ -310,38 +260,7 @@
   <h1 class="page-title" data-i18n="upload_title">Upload Your Run</h1>
   <p class="page-sub" data-i18n="upload_sub">Screenshot any running app — AI extracts your stats automatically.</p>
 
-  <!-- Config Toggle -->
-  <div class="config-row">
-    <button class="config-toggle" onclick="toggleConfig()" id="config-toggle-btn">
-      <span data-i18n="config_btn">⚙ API Config</span> <span id="config-arrow">▼</span>
-    </button>
-    <span class="config-saved" id="config-saved" data-i18n="config_saved">✓ Saved</span>
-  </div>
 
-  <div class="config-panel" id="config-panel">
-    <div class="form-group" style="margin-bottom:0.85rem;">
-      <label data-i18n="config_key">OpenRouter API Key</label>
-      <input type="password" id="api-key" placeholder="sk-or-v1-..." autocomplete="off" />
-    </div>
-    <div class="form-group" style="margin-bottom:0.85rem;">
-      <label data-i18n="config_model">AI Model</label>
-      <select id="ai-model">
-        <option value="openai/gpt-4o-mini">GPT-4o Mini (Recommended)</option>
-        <option value="openai/gpt-4o">GPT-4o (More Accurate)</option>
-        <option value="google/gemini-2.0-flash-001">Gemini 2.0 Flash</option>
-        <option value="google/gemini-2.5-flash-lite">Gemini 2.5 Flash Lite</option>
-        <option value="anthropic/claude-3-haiku">Claude 3 Haiku</option>
-      </select>
-    </div>
-    <div class="form-group" style="margin-bottom:1rem;">
-      <label data-i18n="config_gas">Google Apps Script URL</label>
-      <input type="url" id="gas-url" placeholder="https://script.google.com/macros/s/.../exec" />
-    </div>
-    <button class="btn btn-primary" onclick="saveConfig()" style="width:100%;"
-            data-i18n="config_save">Save Config</button>
-  </div>
-
-  <!-- Drop Zone -->
   <div class="drop-zone" id="drop-zone">
     <input type="file" id="file-input" accept="image/*" onchange="handleFile(this.files[0])" />
     <span class="drop-icon">📷</span>
@@ -435,31 +354,8 @@
 
   // ── LOAD CONFIG ──
   window.addEventListener('load', () => {
-    document.getElementById('api-key').value  = getConfig('OPENROUTER_API_KEY');
-    document.getElementById('gas-url').value  = getConfig('GAS_URL');
-    document.getElementById('ai-model').value = getConfig('DEFAULT_AI_MODEL') || 'openai/gpt-4o-mini';
     applyTranslations();
   });
-
-  // ── CONFIG PANEL ──
-  function toggleConfig() {
-    const panel = document.getElementById('config-panel');
-    const arrow = document.getElementById('config-arrow');
-    panel.classList.toggle('open');
-    arrow.textContent = panel.classList.contains('open') ? '▲' : '▼';
-  }
-
-  function saveConfig() {
-    const key   = document.getElementById('api-key').value.trim();
-    const url   = document.getElementById('gas-url').value.trim();
-    const model = document.getElementById('ai-model').value;
-    if (key)   localStorage.setItem('openrouterKey', key);
-    if (url)   localStorage.setItem('gasUrl', url);
-    if (model) localStorage.setItem('aiModel', model);
-    const saved = document.getElementById('config-saved');
-    saved.classList.add('show');
-    setTimeout(() => saved.classList.remove('show'), 2000);
-  }
 
   // ── DROP ZONE ──
   const dropZone = document.getElementById('drop-zone');

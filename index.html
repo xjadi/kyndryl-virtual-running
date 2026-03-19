@@ -455,7 +455,7 @@
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">Run<span>Track</span></a>
+    <a href="index.html" class="nav-logo">Kyndryl<span>Virtual Run</span></a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="index.html" class="active" data-i18n="nav_home">Home</a></li>
@@ -463,7 +463,7 @@
         <li><a href="leaderboard.html" data-i18n="nav_leaderboard">Leaderboard</a></li>
       </ul>
       <button id="lang-btn" class="btn btn-ghost" onclick="toggleLang()"
-              style="padding:0.4rem 0.75rem;font-size:0.78rem;letter-spacing:1px;">ภาษาไทย</button>
+        style="padding:0.4rem 0.75rem;font-size:0.78rem;letter-spacing:1px;">ภาษาไทย</button>
       <button class="theme-toggle" type="button" aria-label="Toggle theme">
         <span class="theme-toggle-icon" aria-hidden="true">☀</span>
         <span class="theme-toggle-text">
@@ -477,7 +477,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <div class="event-tag" data-i18n="hero_tag">Virtual Event · Open Registration</div>
+      <div class="event-tag" data-i18n="hero_tag">Virtual Event</div>
       <h1 class="hero-title">
         <span data-i18n="hero_title1">Push Your</span>
         <span class="accent" data-i18n="hero_accent">Limits.</span>
@@ -524,8 +524,8 @@
   <section class="how-section">
     <div class="container">
       <div class="section-label" data-i18n="how_label">How it works</div>
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;"
-          data-i18n="how_title">Three Steps to the Board</h2>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;" data-i18n="how_title">Three
+        Steps to the Board</h2>
       <div class="steps-grid">
         <div class="step">
           <div class="step-number">01</div>
@@ -562,8 +562,8 @@
   <section class="distances-section">
     <div class="container">
       <div class="section-label" data-i18n="dist_label">Distance Categories</div>
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;"
-          data-i18n="dist_title">Any Distance Counts</h2>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;" data-i18n="dist_title">Any
+        Distance Counts</h2>
       <div class="distances-grid">
         <div class="distance-card">
           <div class="distance-km">5</div>
@@ -586,8 +586,8 @@
           <div class="distance-name" data-i18n="dist_full">Full Marathon</div>
         </div>
       </div>
-      <p style="margin-top:1.5rem; color:var(--text-muted); font-size:0.9rem; text-align:center;"
-         data-i18n="dist_note">Any distance is welcome! The leaderboard ranks by total distance completed.</p>
+      <p style="margin-top:1.5rem; color:var(--text-muted); font-size:0.9rem; text-align:center;" data-i18n="dist_note">
+        Any distance is welcome! The leaderboard ranks by total distance completed.</p>
     </div>
   </section>
 
@@ -602,28 +602,29 @@
   </section>
 
   <footer>
-    <p data-i18n="footer_text">RunTrack Virtual Event &nbsp;·&nbsp; Powered by AI + Google Sheets &nbsp;·&nbsp; Built with ❤️ for runners everywhere</p>
+    <p data-i18n="footer_text">RunTrack Virtual Event &nbsp;·&nbsp; Powered by AI + Google Sheets &nbsp;·&nbsp; Built
+      with ❤️ for runners everywhere</p>
   </footer>
 
-<script src="config.js"></script>
-<script src="i18n.js"></script>
-<script src="theme.js"></script>
-<script>
-  window.addEventListener('load', () => {
-    applyTranslations();
-    const GAS_URL = getConfig('GAS_URL');
-    if (GAS_URL) {
-      fetch(`${GAS_URL}?action=leaderboard`)
-        .then(r => r.json())
-        .then(data => {
-          if (!Array.isArray(data)) return;
-          const unique = new Set(data.map(r => (r.name || '').trim().toLowerCase()));
-          document.getElementById('runner-count').textContent = unique.size || data.length;
-        })
-        .catch(() => {});
-    }
-  });
-</script>
+  <script src="config.js"></script>
+  <script src="i18n.js"></script>
+  <script src="theme.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      applyTranslations();
+      const GAS_URL = getConfig('GAS_URL');
+      if (GAS_URL) {
+        fetch(`${GAS_URL}?action=leaderboard`)
+          .then(r => r.json())
+          .then(data => {
+            if (!Array.isArray(data)) return;
+            const unique = new Set(data.map(r => (r.name || '').trim().toLowerCase()));
+            document.getElementById('runner-count').textContent = unique.size || data.length;
+          })
+          .catch(() => { });
+      }
+    });
+  </script>
 </body>
 
 </html>
