@@ -458,11 +458,13 @@
     <a href="index.html" class="nav-logo">Run<span>Track</span></a>
     <div class="nav-right">
       <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="upload.html">Upload Result</a></li>
-        <li><a href="leaderboard.html">Leaderboard</a></li>
+        <li><a href="index.html" class="active" data-i18n="nav_home">Home</a></li>
+        <li><a href="upload.html" data-i18n="nav_upload">Upload</a></li>
+        <li><a href="leaderboard.html" data-i18n="nav_leaderboard">Leaderboard</a></li>
       </ul>
-      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">
+      <button id="lang-btn" class="btn btn-ghost" onclick="toggleLang()"
+              style="padding:0.4rem 0.75rem;font-size:0.78rem;letter-spacing:1px;">ภาษาไทย</button>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">
         <span class="theme-toggle-icon" aria-hidden="true">☀</span>
         <span class="theme-toggle-text">
           <span class="theme-toggle-label">Theme</span>
@@ -475,44 +477,44 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <div class="event-tag">Virtual Event · Open Registration</div>
+      <div class="event-tag" data-i18n="hero_tag">Virtual Event · Open Registration</div>
       <h1 class="hero-title">
-        Push Your
-        <span class="accent">Limits.</span>
-        Log Your Run.
+        <span data-i18n="hero_title1">Push Your</span>
+        <span class="accent" data-i18n="hero_accent">Limits.</span>
+        <span data-i18n="hero_title2">Log Your Run.</span>
       </h1>
-      <p class="hero-subtitle">
+      <p class="hero-subtitle" data-i18n="hero_sub">
         Complete your distance, screenshot your result from any running app,
         and upload it here. Our AI reads your stats automatically.
         Compete with runners worldwide — no finish line, no excuses.
       </p>
       <div class="hero-actions">
-        <a href="upload.html" class="btn btn-primary btn-lg">📤 Submit Your Run</a>
-        <a href="leaderboard.html" class="btn btn-outline btn-lg">🏆 View Rankings</a>
+        <a href="upload.html" class="btn btn-primary btn-lg" data-i18n="hero_cta_submit">📤 Submit Your Run</a>
+        <a href="leaderboard.html" class="btn btn-outline btn-lg" data-i18n="hero_cta_rank">🏆 View Rankings</a>
       </div>
     </div>
 
     <div class="hero-right">
       <div class="stats-cluster">
         <div class="stat-card">
-          <div class="stat-label">Top Distance</div>
+          <div class="stat-label" data-i18n="hero_stat_top">Top Distance</div>
           <div class="stat-value mint">42.2</div>
           <div class="stat-sub">km · Marathon</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Best Pace</div>
+          <div class="stat-label" data-i18n="hero_stat_pace">Best Pace</div>
           <div class="stat-value orange">4:32</div>
           <div class="stat-sub">min / km</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Registered Runners</div>
+          <div class="stat-label" data-i18n="hero_stat_runners">Registered Runners</div>
           <div class="stat-value white" id="runner-count">—</div>
-          <div class="stat-sub">from the leaderboard</div>
+          <div class="stat-sub" data-i18n="hero_stat_from">from the leaderboard</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Status</div>
-          <div class="stat-value orange" style="font-size:1.8rem">LIVE</div>
-          <div class="stat-sub">Now accepting entries</div>
+          <div class="stat-label" data-i18n="hero_stat_status">Status</div>
+          <div class="stat-value orange" style="font-size:1.8rem" data-i18n="hero_stat_live">LIVE</div>
+          <div class="stat-sub" data-i18n="hero_stat_accepting">Now accepting entries</div>
         </div>
       </div>
     </div>
@@ -521,16 +523,15 @@
   <!-- HOW IT WORKS -->
   <section class="how-section">
     <div class="container">
-      <div class="section-label">How it works</div>
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;">
-        Three Steps to the Board
-      </h2>
+      <div class="section-label" data-i18n="how_label">How it works</div>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;"
+          data-i18n="how_title">Three Steps to the Board</h2>
       <div class="steps-grid">
         <div class="step">
           <div class="step-number">01</div>
           <div class="step-icon">🏃‍♂️</div>
-          <div class="step-title">Complete Your Run</div>
-          <div class="step-desc">
+          <div class="step-title" data-i18n="step1_title">Complete Your Run</div>
+          <div class="step-desc" data-i18n="step1_desc">
             Run any distance using Garmin, Strava, Apple Watch, Nike Run, or any tracking app. No minimum distance
             required.
           </div>
@@ -538,8 +539,8 @@
         <div class="step">
           <div class="step-number">02</div>
           <div class="step-icon">📸</div>
-          <div class="step-title">Screenshot Your Stats</div>
-          <div class="step-desc">
+          <div class="step-title" data-i18n="step2_title">Screenshot Your Stats</div>
+          <div class="step-desc" data-i18n="step2_desc">
             Take a screenshot of your result screen showing your name, distance, pace, time, and date. Mixed app types
             are accepted.
           </div>
@@ -547,8 +548,8 @@
         <div class="step">
           <div class="step-number">03</div>
           <div class="step-icon">🤖</div>
-          <div class="step-title">AI Reads Your Data</div>
-          <div class="step-desc">
+          <div class="step-title" data-i18n="step3_title">AI Reads Your Data</div>
+          <div class="step-desc" data-i18n="step3_desc">
             Upload the photo. Our AI automatically extracts all your stats. Review, confirm, and your result lands on
             the leaderboard instantly.
           </div>
@@ -560,69 +561,68 @@
   <!-- DISTANCE CATEGORIES -->
   <section class="distances-section">
     <div class="container">
-      <div class="section-label">Distance Categories</div>
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;">
-        Any Distance Counts
-      </h2>
+      <div class="section-label" data-i18n="dist_label">Distance Categories</div>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;"
+          data-i18n="dist_title">Any Distance Counts</h2>
       <div class="distances-grid">
         <div class="distance-card">
           <div class="distance-km">5</div>
           <div class="distance-unit">KM</div>
-          <div class="distance-name">Fun Run</div>
+          <div class="distance-name" data-i18n="dist_fun">Fun Run</div>
         </div>
         <div class="distance-card">
           <div class="distance-km">10</div>
           <div class="distance-unit">KM</div>
-          <div class="distance-name">10K Classic</div>
+          <div class="distance-name" data-i18n="dist_10k">10K Classic</div>
         </div>
         <div class="distance-card">
           <div class="distance-km">21.1</div>
           <div class="distance-unit">KM</div>
-          <div class="distance-name">Half Marathon</div>
+          <div class="distance-name" data-i18n="dist_half">Half Marathon</div>
         </div>
         <div class="distance-card">
           <div class="distance-km">42.2</div>
           <div class="distance-unit">KM</div>
-          <div class="distance-name">Full Marathon</div>
+          <div class="distance-name" data-i18n="dist_full">Full Marathon</div>
         </div>
       </div>
-      <p style="margin-top:1.5rem; color:var(--text-muted); font-size:0.9rem; text-align:center;">
-        Any distance is welcome! The leaderboard ranks by longest distance completed.
-      </p>
+      <p style="margin-top:1.5rem; color:var(--text-muted); font-size:0.9rem; text-align:center;"
+         data-i18n="dist_note">Any distance is welcome! The leaderboard ranks by total distance completed.</p>
     </div>
   </section>
 
   <!-- CTA -->
   <section class="cta-section">
-    <h2 class="cta-title">Ready to Race?</h2>
-    <p class="cta-sub">Upload your result and claim your spot on the global leaderboard.</p>
+    <h2 class="cta-title" data-i18n="cta_title">Ready to Race?</h2>
+    <p class="cta-sub" data-i18n="cta_sub">Upload your result and claim your spot on the global leaderboard.</p>
     <div class="cta-actions">
-      <a href="upload.html" class="btn btn-primary btn-lg">Submit Your Run →</a>
-      <a href="leaderboard.html" class="btn btn-ghost btn-lg">View Leaderboard</a>
+      <a href="upload.html" class="btn btn-primary btn-lg" data-i18n="cta_submit">Submit Your Run →</a>
+      <a href="leaderboard.html" class="btn btn-ghost btn-lg" data-i18n="cta_board">View Leaderboard</a>
     </div>
   </section>
 
   <footer>
-    <p>RunTrack Virtual Event &nbsp;·&nbsp; Powered by AI + Google Sheets &nbsp;·&nbsp;
-      Built with ❤️ for runners everywhere</p>
+    <p data-i18n="footer_text">RunTrack Virtual Event &nbsp;·&nbsp; Powered by AI + Google Sheets &nbsp;·&nbsp; Built with ❤️ for runners everywhere</p>
   </footer>
 
-  <script src="config.js"></script>
+<script src="config.js"></script>
+<script src="i18n.js"></script>
 <script src="theme.js"></script>
 <script>
-  // Fetch runner count from leaderboard — uses config.js getConfig() helper
-  const GAS_URL = getConfig('GAS_URL');
-  if (GAS_URL) {
-    fetch(`${GAS_URL}?action=leaderboard`)
-      .then(r => r.json())
-      .then(data => {
-        if (!Array.isArray(data)) return;
-        // Aggregate unique runners
-        const unique = new Set(data.map(r => (r.name || '').trim().toLowerCase()));
-        document.getElementById('runner-count').textContent = unique.size || data.length;
-      })
-      .catch(() => {});
-  }
+  window.addEventListener('load', () => {
+    applyTranslations();
+    const GAS_URL = getConfig('GAS_URL');
+    if (GAS_URL) {
+      fetch(`${GAS_URL}?action=leaderboard`)
+        .then(r => r.json())
+        .then(data => {
+          if (!Array.isArray(data)) return;
+          const unique = new Set(data.map(r => (r.name || '').trim().toLowerCase()));
+          document.getElementById('runner-count').textContent = unique.size || data.length;
+        })
+        .catch(() => {});
+    }
+  });
 </script>
 </body>
 

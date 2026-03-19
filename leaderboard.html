@@ -131,7 +131,7 @@
 
     /* ── PODIUM ── */
     .podium-section {
-      padding: 2rem 2rem;
+      padding: 2rem;
       border-bottom: 1px solid var(--border);
       position: relative;
       z-index: 1;
@@ -156,12 +156,12 @@
     }
 
     .podium-card:hover { transform: translateY(-3px); }
-    .podium-card.first { border-color: rgba(255,209,102,0.35); background: linear-gradient(135deg, var(--bg-card), rgba(255,209,102,0.04)); }
+    .podium-card.first  { border-color: rgba(255,209,102,0.35); background: linear-gradient(135deg, var(--bg-card), rgba(255,209,102,0.04)); }
     .podium-card.second { border-color: rgba(184,196,206,0.3); }
     .podium-card.third  { border-color: rgba(201,132,90,0.3); }
 
-    .podium-medal { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
-    .podium-rank  { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 3px; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .podium-medal  { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+    .podium-rank   { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 3px; color: var(--text-muted); margin-bottom: 0.3rem; }
 
     .podium-name {
       font-family: 'Barlow Condensed', sans-serif;
@@ -264,8 +264,8 @@
       vertical-align: middle;
     }
 
-    .col-rank { width: 50px; text-align: center; }
-    .rank-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 1px; color: var(--text-muted); }
+    .col-rank  { width: 50px; text-align: center; }
+    .rank-num  { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 1px; color: var(--text-muted); }
     .rank-medal { font-size: 1.3rem; }
 
     .col-name {
@@ -291,13 +291,7 @@
       margin-left: 2px;
     }
 
-    .col-runs {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
-
+    .col-runs { font-family: 'Barlow Condensed', sans-serif; font-size: 0.88rem; color: var(--text-muted); }
     .col-muted { color: var(--text-muted); font-size: 0.88rem; }
 
     .distance-bar-wrap {
@@ -327,7 +321,7 @@
 
     #empty-state .empty-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
     #empty-state h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
-    #empty-state p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.9rem; }
+    #empty-state p  { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.9rem; }
 
     #loading-state {
       display: flex;
@@ -344,21 +338,18 @@
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      .page-header { padding: 1.25rem 1rem; flex-direction: column; align-items: flex-start; }
-      .stats-bar { grid-template-columns: repeat(2, 1fr); }
-      .stat-item { padding: 1rem; }
+      .page-header  { padding: 1.25rem 1rem; flex-direction: column; align-items: flex-start; }
+      .stats-bar    { grid-template-columns: repeat(2, 1fr); }
+      .stat-item    { padding: 1rem; }
       .podium-section { padding: 1.25rem 1rem; }
-      .podium-grid { grid-template-columns: 1fr; max-width: 320px; }
+      .podium-grid  { grid-template-columns: 1fr; max-width: 320px; }
       .podium-grid > * { padding-bottom: 0 !important; }
       .podium-grid > :nth-child(2) { order: -1; }
       .table-section { padding: 1rem; }
       .search-input { width: 100%; }
       .table-header { flex-direction: column; align-items: flex-start; }
-      #setup-panel { margin: 1rem; }
-      .setup-row { flex-direction: column; }
-      /* Hide less important columns on mobile */
-      .leaderboard-table thead th:nth-child(4),
-      .leaderboard-table tbody td:nth-child(4) { display: none; }
+      #setup-panel  { margin: 1rem; }
+      .setup-row    { flex-direction: column; }
     }
 
     @media (max-width: 480px) {
@@ -373,10 +364,12 @@
   <a href="index.html" class="nav-logo">Run<span>Track</span></a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="upload.html">Upload</a></li>
-      <li><a href="leaderboard.html" class="active">Leaderboard</a></li>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="upload.html" data-i18n="nav_upload">Upload</a></li>
+      <li><a href="leaderboard.html" class="active" data-i18n="nav_leaderboard">Leaderboard</a></li>
     </ul>
+    <button id="lang-btn" class="btn btn-ghost" onclick="toggleLang()"
+            style="padding:0.4rem 0.75rem;font-size:0.78rem;letter-spacing:1px;">ภาษาไทย</button>
     <button class="theme-toggle" type="button" aria-label="Toggle theme">
       <span class="theme-toggle-icon" aria-hidden="true">☀</span>
       <span class="theme-toggle-text">
@@ -390,72 +383,76 @@
 <!-- PAGE HEADER -->
 <div class="page-header">
   <div>
-    <div class="section-label">Ranked by Total Distance</div>
-    <h1 class="page-title">Leaderboard</h1>
-    <p class="page-sub">Cumulative distance across all submitted runs — updated live.</p>
+    <div class="section-label" data-i18n="lb_label">Ranked by Total Distance</div>
+    <h1 class="page-title" data-i18n="lb_title">Leaderboard</h1>
+    <p class="page-sub" data-i18n="lb_sub">Cumulative distance across all submitted runs — updated live.</p>
   </div>
   <div class="header-right">
     <div class="live-indicator">
       <div class="live-dot"></div>
-      Refresh in <span id="countdown" style="font-variant-numeric:tabular-nums;">60</span>s
+      <span data-i18n="lb_refresh_in">Refresh in</span>
+      <span id="countdown" style="font-variant-numeric:tabular-nums;">60</span>s
     </div>
-    <button class="btn btn-ghost" onclick="loadLeaderboard()">⟳ Refresh</button>
-    <a href="upload.html" class="btn btn-primary">📤 Submit Run</a>
+    <button class="btn btn-ghost" onclick="loadLeaderboard()" data-i18n="lb_refresh">⟳ Refresh</button>
+    <a href="upload.html" class="btn btn-primary" data-i18n="lb_submit">📤 Submit Run</a>
   </div>
 </div>
 
 <!-- SETUP PANEL -->
 <div id="setup-panel" style="display:none;">
-  <h3>⚙️ Connect to Google Sheets</h3>
-  <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:1rem;">
+  <h3 data-i18n="lb_setup_title">⚙️ Connect to Google Sheets</h3>
+  <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:1rem;" data-i18n="lb_setup_sub">
     Enter your Google Apps Script URL to load leaderboard data.
   </p>
   <div class="setup-row">
     <div class="form-group">
-      <label>Google Apps Script URL</label>
-      <input type="url" id="setup-gas-url" placeholder="https://script.google.com/macros/s/.../exec" />
+      <label data-i18n="lb_setup_label">Google Apps Script URL</label>
+      <input type="url" id="setup-gas-url" data-i18n-placeholder="lb_setup_label"
+             placeholder="https://script.google.com/macros/s/.../exec" />
     </div>
-    <button class="btn btn-primary" onclick="saveSetup()" style="flex-shrink:0;">Connect</button>
+    <button class="btn btn-primary" onclick="saveSetup()" style="flex-shrink:0;"
+            data-i18n="lb_connect">Connect</button>
   </div>
 </div>
 
 <!-- STATS BAR -->
 <div class="stats-bar" id="stats-bar" style="display:none;">
   <div class="stat-item">
-    <div class="stat-item-label">Runners</div>
+    <div class="stat-item-label" data-i18n="stat_runners">Runners</div>
     <div class="stat-item-value" id="stat-runners">—</div>
   </div>
   <div class="stat-item">
-    <div class="stat-item-label">Top Total</div>
+    <div class="stat-item-label" data-i18n="stat_top">Top Total</div>
     <div class="stat-item-value mint" id="stat-top-dist">—</div>
   </div>
   <div class="stat-item">
-    <div class="stat-item-label">Total Runs</div>
+    <div class="stat-item-label" data-i18n="stat_runs">Total Runs</div>
     <div class="stat-item-value orange" id="stat-total-runs">—</div>
   </div>
   <div class="stat-item">
-    <div class="stat-item-label">Total km</div>
+    <div class="stat-item-label" data-i18n="stat_km">Total km</div>
     <div class="stat-item-value" id="stat-total-km">—</div>
   </div>
 </div>
 
 <!-- PODIUM -->
 <div class="podium-section" id="podium-section" style="display:none;">
-  <div class="section-label">Top Finishers</div>
+  <div class="section-label" data-i18n="podium_label">Top Finishers</div>
   <div class="podium-grid" id="podium-grid"></div>
 </div>
 
 <!-- LOADING -->
 <div id="loading-state">
   <div class="spinner" style="width:32px;height:32px;border-width:3px;"></div>
-  <p>Loading leaderboard...</p>
+  <p data-i18n="loading_lb">Loading leaderboard...</p>
 </div>
 
 <!-- TABLE -->
 <div class="table-section" id="table-section" style="display:none;">
   <div class="table-header">
-    <div class="table-title">All Runners</div>
+    <div class="table-title" data-i18n="all_runners">All Runners</div>
     <input type="text" class="search-input" id="search-input"
+           data-i18n-placeholder="tbl_search"
            placeholder="🔍 Search runner..."
            oninput="filterTable(this.value)" />
   </div>
@@ -463,10 +460,9 @@
     <thead>
       <tr>
         <th class="col-rank">#</th>
-        <th>Runner</th>
-        <th class="sort-active">Total km ↓</th>
-        <th>Runs</th>
-        <th>Best Pace</th>
+        <th data-i18n="tbl_runner">Runner</th>
+        <th class="sort-active" data-i18n="tbl_total_km">Total km ↓</th>
+        <th data-i18n="tbl_runs">Runs</th>
       </tr>
     </thead>
     <tbody id="table-body"></tbody>
@@ -476,24 +472,26 @@
 <!-- EMPTY STATE -->
 <div id="empty-state">
   <div class="empty-icon">🏁</div>
-  <h3>No Runners Yet</h3>
-  <p>Be the first to submit your run!</p>
-  <a href="upload.html" class="btn btn-primary">Submit Your Run →</a>
+  <h3 data-i18n="no_runners">No Runners Yet</h3>
+  <p data-i18n="no_runners_sub">Be the first to submit your run!</p>
+  <a href="upload.html" class="btn btn-primary" data-i18n="submit_run">Submit Your Run →</a>
 </div>
 
 <script src="config.js"></script>
+<script src="i18n.js"></script>
 <script src="theme.js"></script>
 <script>
-  let allRunners = [];     // aggregated per-person
+  let allRunners  = [];
   let countdownTimer;
   let countdownValue = 60;
   let maxTotalDist   = 0;
 
   // ── INIT ──
   window.addEventListener('load', () => {
+    applyTranslations();
     const gasUrl = getConfig('GAS_URL');
     if (!gasUrl) {
-      document.getElementById('setup-panel').style.display = 'block';
+      document.getElementById('setup-panel').style.display   = 'block';
       document.getElementById('loading-state').style.display = 'none';
     } else {
       loadLeaderboard();
@@ -505,7 +503,7 @@
     const url = document.getElementById('setup-gas-url').value.trim();
     if (!url) return;
     localStorage.setItem('gasUrl', url);
-    document.getElementById('setup-panel').style.display = 'none';
+    document.getElementById('setup-panel').style.display   = 'none';
     document.getElementById('loading-state').style.display = 'flex';
     loadLeaderboard();
     startCountdown();
@@ -533,34 +531,19 @@
         return;
       }
 
-      // ── AGGREGATE by person name (case-insensitive) ──
+      // ── AGGREGATE by name (case-insensitive) ──
       const map = {};
       data.forEach(row => {
         const key  = (row.name || 'Unknown').trim().toLowerCase();
         const dist = parseFloat(row.distance) || 0;
         if (!map[key]) {
-          map[key] = {
-            name:     (row.name || 'Unknown').trim(),
-            totalKm:  0,
-            runs:     0,
-            bestPace: null,
-          };
+          map[key] = { name: (row.name || 'Unknown').trim(), totalKm: 0, runs: 0 };
         }
         map[key].totalKm += dist;
         map[key].runs    += 1;
-
-        // Track best (lowest) pace
-        if (row.pace && /^\d+:\d+$/.test(row.pace)) {
-          const [m, s] = row.pace.split(':').map(Number);
-          const secs   = m * 60 + s;
-          if (map[key].bestPace === null || secs < map[key].bestPace) {
-            map[key].bestPace = secs;
-          }
-        }
       });
 
-      // Sort by totalKm descending
-      allRunners = Object.values(map).sort((a, b) => b.totalKm - a.totalKm);
+      allRunners   = Object.values(map).sort((a, b) => b.totalKm - a.totalKm);
       maxTotalDist = allRunners[0]?.totalKm || 1;
 
       renderStats(allRunners, data.length);
@@ -583,21 +566,22 @@
   // ── RENDER STATS ──
   function renderStats(runners, totalRuns) {
     const totalKm = runners.reduce((s, r) => s + r.totalKm, 0);
-    document.getElementById('stat-runners').textContent   = runners.length;
-    document.getElementById('stat-top-dist').textContent  = runners[0].totalKm.toFixed(1) + ' km';
+    document.getElementById('stat-runners').textContent    = runners.length;
+    document.getElementById('stat-top-dist').textContent   = runners[0].totalKm.toFixed(1) + ' km';
     document.getElementById('stat-total-runs').textContent = totalRuns;
-    document.getElementById('stat-total-km').textContent  = totalKm.toFixed(1) + ' km';
+    document.getElementById('stat-total-km').textContent   = totalKm.toFixed(1) + ' km';
   }
 
   // ── RENDER PODIUM ──
   function renderPodium(top3) {
     const medals  = ['🥇', '🥈', '🥉'];
     const classes = ['first', 'second', 'third'];
-    // Visual order: 2nd, 1st, 3rd
     const order        = top3.length >= 3 ? [top3[1], top3[0], top3[2]] : top3;
     const orderClasses = top3.length >= 3 ? [classes[1], classes[0], classes[2]] : classes;
     const orderMedals  = top3.length >= 3 ? [medals[1], medals[0], medals[2]] : medals;
     const orderRanks   = top3.length >= 3 ? [2, 1, 3] : [1, 2, 3];
+
+    const runLabel = (n) => `${n} ${n === 1 ? t('run_singular') : t('run_plural')}`;
 
     document.getElementById('podium-grid').innerHTML = order.map((runner, i) => `
       <div class="podium-card ${orderClasses[i]}">
@@ -606,7 +590,7 @@
         <div class="podium-name" title="${escapeHtml(runner.name)}">${escapeHtml(runner.name)}</div>
         <div class="podium-distance">${runner.totalKm.toFixed(2)}</div>
         <div class="podium-distance-unit">km total</div>
-        <div class="podium-runs">${runner.runs} run${runner.runs !== 1 ? 's' : ''}</div>
+        <div class="podium-runs">${runLabel(runner.runs)}</div>
       </div>
     `).join('');
   }
@@ -614,13 +598,11 @@
   // ── RENDER TABLE ──
   function renderTable(runners) {
     const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
+    const runLabel = (n) => `${n} ${n === 1 ? t('run_singular') : t('run_plural')}`;
 
     document.getElementById('table-body').innerHTML = runners.map((runner, i) => {
       const rank    = i + 1;
       const distPct = Math.round((runner.totalKm / maxTotalDist) * 100);
-      const paceStr = runner.bestPace !== null
-        ? `${Math.floor(runner.bestPace / 60)}:${String(runner.bestPace % 60).padStart(2, '0')}`
-        : '—';
 
       return `
         <tr style="animation-delay:${Math.min(i * 0.03, 0.5)}s">
@@ -636,8 +618,7 @@
               <div class="distance-bar" style="width:${distPct}%"></div>
             </div>
           </td>
-          <td class="col-runs">${runner.runs} run${runner.runs !== 1 ? 's' : ''}</td>
-          <td class="col-muted">${paceStr !== '—' ? paceStr + '/km' : '—'}</td>
+          <td class="col-runs">${runLabel(runner.runs)}</td>
         </tr>
       `;
     }).join('');
@@ -653,7 +634,7 @@
     if (filtered.length === 0) {
       document.getElementById('table-body').innerHTML = `
         <tr>
-          <td colspan="5" style="text-align:center;padding:2.5rem;color:var(--text-muted);">
+          <td colspan="4" style="text-align:center;padding:2.5rem;color:var(--text-muted);">
             No runners match "${escapeHtml(query)}"
           </td>
         </tr>`;

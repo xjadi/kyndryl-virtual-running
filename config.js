@@ -22,7 +22,7 @@ const APP_CONFIG = {
 
   // Default AI model for image analysis
   // Options: "openai/gpt-4o-mini" | "openai/gpt-4o" | "google/gemini-2.0-flash-001" | "anthropic/claude-3-haiku"
-  DEFAULT_AI_MODEL: "openai/gpt-4o-mini",
+  DEFAULT_AI_MODEL: "google/gemini-2.5-flash-lite",
 };
 
 // Expose a helper that returns localStorage override → config.js value → fallback
