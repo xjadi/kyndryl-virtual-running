@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RunTrack — Virtual Running Event</title>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('runtrack-theme');
+        document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    }());
+  </script>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: calc(100vh - 70px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 3rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Animated grid background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,85,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,85,0,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      animation: gridScroll 20s linear infinite;
+    }
+
+    @keyframes gridScroll {
+      from { background-position: 0 0; }
+      to { background-position: 60px 60px; }
+    }
+
+    /* Orange glow center-right */
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: 5%;
+      top: 30%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,85,0,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-left {
+      padding-right: 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .event-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--orange-dim);
+      border: 1px solid rgba(255,85,0,0.3);
+      border-radius: 2px;
+      padding: 0.35rem 0.85rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1.5rem;
+    }
+
+    .event-tag::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 7vw, 7.5rem);
+      line-height: 0.9;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .accent {
+      color: var(--orange);
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-right {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Stats card cluster */
+    .stats-cluster {
+      position: relative;
+      width: 380px;
+      height: 420px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      position: absolute;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-card:nth-child(1) {
+      top: 0; left: 0;
+      width: 200px;
+      animation: float1 4s ease-in-out infinite;
+    }
+
+    .stat-card:nth-child(2) {
+      top: 60px; right: 0;
+      width: 180px;
+      animation: float2 5s ease-in-out infinite;
+    }
+
+    .stat-card:nth-child(3) {
+      bottom: 30px; left: 20px;
+      width: 220px;
+      animation: float1 6s ease-in-out infinite reverse;
+    }
+
+    .stat-card:nth-child(4) {
+      bottom: 80px; right: 20px;
+      width: 140px;
+      animation: float2 3.5s ease-in-out infinite;
+    }
+
+    @keyframes float1 {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(6px); }
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .stat-value.orange { color: var(--orange); }
+    .stat-value.mint { color: var(--mint); }
+    .stat-value.white { color: var(--text); }
+
+    .stat-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      padding: 5rem 3rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 3rem;
+      background: var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .step {
+      background: var(--bg-card);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .step-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .step-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .step-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .step-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .step:hover {
+      background: var(--bg-card2);
+    }
+
+    .step-connector {
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      background: var(--orange);
+      border-radius: 50%;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: white;
+    }
+
+    /* ── DISTANCES ── */
+    .distances-section {
+      padding: 4rem 3rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .distances-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .distance-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.25s;
+      cursor: default;
+    }
+
+    .distance-card:hover {
+      border-color: rgba(255,85,0,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .distance-km {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--orange);
+      line-height: 1;
+    }
+
+    .distance-unit {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .distance-name {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 0.75rem;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 5rem 3rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(255,85,0,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-sub {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .hero-right { display: none; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .distances-grid { grid-template-columns: repeat(2, 1fr); }
+      .how-section, .distances-section, .cta-section { padding: 3rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Run<span>Track</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="upload.html">Upload Result</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+    </ul>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">
+      <span class="theme-toggle-icon" aria-hidden="true">☀</span>
+      <span class="theme-toggle-text">
+        <span class="theme-toggle-label">Theme</span>
+        <span class="theme-toggle-value">Light</span>
+      </span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="event-tag">Virtual Event · Open Registration</div>
+    <h1 class="hero-title">
+      Push Your
+      <span class="accent">Limits.</span>
+      Log Your Run.
+    </h1>
+    <p class="hero-subtitle">
+      Complete your distance, screenshot your result from any running app,
+      and upload it here. Our AI reads your stats automatically.
+      Compete with runners worldwide — no finish line, no excuses.
+    </p>
+    <div class="hero-actions">
+      <a href="upload.html" class="btn btn-primary btn-lg">📤 Submit Your Run</a>
+      <a href="leaderboard.html" class="btn btn-outline btn-lg">🏆 View Rankings</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stats-cluster">
+      <div class="stat-card">
+        <div class="stat-label">Top Distance</div>
+        <div class="stat-value mint">42.2</div>
+        <div class="stat-sub">km · Marathon</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Best Pace</div>
+        <div class="stat-value orange">4:32</div>
+        <div class="stat-sub">min / km</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Registered Runners</div>
+        <div class="stat-value white" id="runner-count">—</div>
+        <div class="stat-sub">from the leaderboard</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Status</div>
+        <div class="stat-value orange" style="font-size:1.8rem">LIVE</div>
+        <div class="stat-sub">Now accepting entries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="container">
+    <div class="section-label">How it works</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;">
+      Three Steps to the Board
+    </h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-number">01</div>
+        <div class="step-icon">🏃‍♂️</div>
+        <div class="step-title">Complete Your Run</div>
+        <div class="step-desc">
+          Run any distance using Garmin, Strava, Apple Watch, Nike Run, or any tracking app. No minimum distance required.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">02</div>
+        <div class="step-icon">📸</div>
+        <div class="step-title">Screenshot Your Stats</div>
+        <div class="step-desc">
+          Take a screenshot of your result screen showing your name, distance, pace, time, and date. Mixed app types are accepted.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">03</div>
+        <div class="step-icon">🤖</div>
+        <div class="step-title">AI Reads Your Data</div>
+        <div class="step-desc">
+          Upload the photo. Our AI automatically extracts all your stats. Review, confirm, and your result lands on the leaderboard instantly.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISTANCE CATEGORIES -->
+<section class="distances-section">
+  <div class="container">
+    <div class="section-label">Distance Categories</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px;">
+      Any Distance Counts
+    </h2>
+    <div class="distances-grid">
+      <div class="distance-card">
+        <div class="distance-km">5</div>
+        <div class="distance-unit">KM</div>
+        <div class="distance-name">Fun Run</div>
+      </div>
+      <div class="distance-card">
+        <div class="distance-km">10</div>
+        <div class="distance-unit">KM</div>
+        <div class="distance-name">10K Classic</div>
+      </div>
+      <div class="distance-card">
+        <div class="distance-km">21.1</div>
+        <div class="distance-unit">KM</div>
+        <div class="distance-name">Half Marathon</div>
+      </div>
+      <div class="distance-card">
+        <div class="distance-km">42.2</div>
+        <div class="distance-unit">KM</div>
+        <div class="distance-name">Full Marathon</div>
+      </div>
+    </div>
+    <p style="margin-top:1.5rem; color:var(--text-muted); font-size:0.9rem; text-align:center;">
+      Any distance is welcome! The leaderboard ranks by longest distance completed.
+    </p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-title">Ready to Race?</h2>
+  <p class="cta-sub">Upload your result and claim your spot on the global leaderboard.</p>
+  <div class="cta-actions">
+    <a href="upload.html" class="btn btn-primary btn-lg">Submit Your Run →</a>
+    <a href="leaderboard.html" class="btn btn-ghost btn-lg">View Leaderboard</a>
+  </div>
+</section>
+
+<footer>
+  <p>RunTrack Virtual Event &nbsp;·&nbsp; Powered by AI + Google Sheets &nbsp;·&nbsp;
+     Built with ❤️ for runners everywhere</p>
+</footer>
+
+<script src="theme.js"></script>
+<script>
+  // Fetch runner count from leaderboard
+  const GAS_URL = localStorage.getItem('gasUrl');
+  if (GAS_URL) {
+    fetch(`${GAS_URL}?action=leaderboard`)
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('runner-count').textContent = Array.isArray(data) ? data.length : '—';
+      })
+      .catch(() => {});
+  }
+</script>
+</body>
+</html>
