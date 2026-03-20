@@ -55,6 +55,9 @@ function handleSubmit(params) {
     return jsonResponse({ error: 'Distance must be greater than 0' }, 400);
   }
 
+  // Force submitted_at to plain text so Sheets won't auto-parse it as a Date
+  const submitAt = (params.submit_at || '').trim() || new Date().toLocaleString('en-US');
+
   sheet.appendRow([
     name,
     params.finish_date || '',
@@ -62,8 +65,12 @@ function handleSubmit(params) {
     distance,
     params.pace || '',
     params.time || '',
-    new Date().toISOString()
+    "'" + submitAt           // leading apostrophe forces Google Sheets to treat as text
   ]);
+
+  // Ensure the submitted_at column is formatted as plain text (col 7 = G)
+  const lastRow = sheet.getLastRow();
+  sheet.getRange(lastRow, 7).setNumberFormat('@STRING@');
 
   return jsonResponse({ success: true, message: 'Runner submitted successfully' });
 }
@@ -110,6 +117,9 @@ function getOrCreateSheet() {
     headerRange.setFontWeight('bold');
     headerRange.setBackground('#1a1a2e');
     headerRange.setFontColor('#ffffff');
+
+    // Force submitted_at column (col 7) to plain text so dates are never auto-parsed
+    sheet.getRange(2, 7, sheet.getMaxRows() - 1, 1).setNumberFormat('@STRING@');
   }
 
   return sheet;
