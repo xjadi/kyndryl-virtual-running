@@ -33,7 +33,7 @@ const TRANSLATIONS = {
     how_label: "How it works",
     how_title: "Three Steps to the Board",
     step1_title: "Complete Your Run",
-    step1_desc: "Run any distance using Garmin, Strava, Apple Watch, Nike Run, or any tracking app. No minimum distance required.",
+    step1_desc: "Run any distance and sync with Strava — it works best! Other apps like Garmin, Apple Watch, or Nike Run might work too, but just a heads up, there could be some glitches! 🏃‍♀️✨",
     step2_title: "Screenshot Your Stats",
     step2_desc: "Take a screenshot of your result screen showing your name, distance, pace, time, and date. Mixed app types are accepted.",
     step3_title: "AI Reads Your Data",
@@ -49,7 +49,7 @@ const TRANSLATIONS = {
     cta_sub: "Upload your result and claim your spot on the global leaderboard.",
     cta_submit: "Submit Your Run →",
     cta_board: "View Leaderboard",
-    footer_text: "RunTrack Virtual Event · Powered by AI + Google Sheets · Built with ❤️ for runners everywhere",
+    footer_text: "kyndryl Virtual Running · Powered by Google · Built with ❤️ for runners everywhere",
 
     // UPLOAD
     upload_eyebrow: "AI-Powered Submission",
@@ -136,7 +136,7 @@ const TRANSLATIONS = {
     how_label: "วิธีการ",
     how_title: "3 ขั้นตอนสู่กระดานอันดับ",
     step1_title: "วิ่งให้เสร็จ",
-    step1_desc: "วิ่งระยะใดก็ได้ด้วย Garmin, Strava, Apple Watch, Nike Run หรือแอปติดตามอื่นๆ ไม่มีระยะขั้นต่ำ",
+    step1_desc: "วิ่งระยะไหนก็ได้แล้วซิงค์ผ่าน Strava เลยนะคะ — ใช้งานได้ดีที่สุดเลย! แอปอื่น ๆ อย่าง Garmin, Apple Watch หรือ Nike Run ก็อาจใช้ได้เหมือนกัน แต่เดี๋ยวอาจมีติดขัดนิดหน่อยนะคะ 🏃‍♀️✨",
     step2_title: "ถ่ายหน้าจอสถิติ",
     step2_desc: "ถ่ายภาพหน้าจอผลการวิ่งที่แสดงชื่อ ระยะ เพซ เวลา และวันที่ รองรับทุกแอป",
     step3_title: "AI อ่านข้อมูลให้",
@@ -152,7 +152,7 @@ const TRANSLATIONS = {
     cta_sub: "อัพโหลดผลการวิ่งและจองที่ของคุณบนกระดานอันดับ",
     cta_submit: "ส่งผลการวิ่ง →",
     cta_board: "ดูกระดานอันดับ",
-    footer_text: "RunTrack Virtual Event · ขับเคลื่อนด้วย AI + Google Sheets · สร้างด้วย ❤️ สำหรับนักวิ่ง",
+    footer_text: "kyndryl Virtual Running · ขับเคลื่อนด้วย Google · สร้างด้วย ❤️ สำหรับนักวิ่ง",
 
     // UPLOAD
     upload_eyebrow: "ส่งผลด้วย AI",
