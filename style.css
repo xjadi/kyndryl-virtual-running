@@ -11,9 +11,9 @@
   --nav-bg: rgba(245, 239, 230, 0.82);
   --page-glow-a: rgba(232, 91, 22, 0.14);
   --page-glow-b: rgba(0, 126, 108, 0.1);
-  --orange: #e85b16;
-  --orange-dim: rgba(232, 91, 22, 0.12);
-  --orange-glow: rgba(232, 91, 22, 0.26);
+  --orange: #FF462D;
+  --orange-dim: rgba(255, 70, 45, 0.12);
+  --orange-glow: rgba(255, 70, 45, 0.26);
   --mint: #007e6c;
   --mint-dim: rgba(0, 126, 108, 0.12);
   --text: #1d242b;
@@ -21,7 +21,7 @@
   --text-dim: #9da5af;
   --border: rgba(29, 36, 43, 0.1);
   --border-strong: rgba(29, 36, 43, 0.16);
-  --border-active: rgba(232, 91, 22, 0.32);
+  --border-active: rgba(255, 70, 45, 0.32);
   --gold: #FFD166;
   --silver: #B8C4CE;
   --bronze: #C9845A;
@@ -43,9 +43,9 @@ html[data-theme='dark'] {
   --nav-bg: rgba(7, 10, 14, 0.92);
   --page-glow-a: rgba(255, 85, 0, 0.08);
   --page-glow-b: rgba(0, 229, 160, 0.05);
-  --orange: #FF5500;
-  --orange-dim: rgba(255, 85, 0, 0.15);
-  --orange-glow: rgba(255, 85, 0, 0.35);
+  --orange: #FF462D;
+  --orange-dim: rgba(255, 70, 45, 0.15);
+  --orange-glow: rgba(255, 70, 45, 0.35);
   --mint: #00E5A0;
   --mint-dim: rgba(0, 229, 160, 0.12);
   --text: #EEE9E2;
@@ -53,7 +53,7 @@ html[data-theme='dark'] {
   --text-dim: #3D4E5E;
   --border: rgba(255,255,255,0.07);
   --border-strong: rgba(255,255,255,0.14);
-  --border-active: rgba(255,85,0,0.4);
+  --border-active: rgba(255, 70, 45, 0.4);
   --shadow: 0 4px 24px rgba(0,0,0,0.5);
   --shadow-strong: 0 18px 48px rgba(0,0,0,0.5);
   --spinner-track: rgba(255,255,255,0.1);

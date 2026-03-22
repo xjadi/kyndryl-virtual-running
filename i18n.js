@@ -43,7 +43,7 @@ const TRANSLATIONS = {
     cta_sub: "Upload your result and claim your spot on the global leaderboard.",
     cta_submit: "Submit Your Run →",
     cta_board: "View Leaderboard",
-    footer_text: "kyndryl Virtual Running · Powered by Google · Built with ❤️ for runners everywhere",
+    footer_text: "Running The Kyndryl Way 2026",
 
     // UPLOAD
     upload_eyebrow: "AI-Powered Submission",
@@ -143,7 +143,7 @@ const TRANSLATIONS = {
     cta_sub: "อัพโหลดผลการวิ่งและจองที่ของคุณบนกระดานอันดับ",
     cta_submit: "ส่งผลการวิ่ง →",
     cta_board: "ดูกระดานอันดับ",
-    footer_text: "kyndryl Virtual Running · ขับเคลื่อนด้วย Google · สร้างด้วย ❤️ สำหรับนักวิ่ง",
+    footer_text: "Running The Kyndryl Way 2026",
 
     // UPLOAD
     upload_eyebrow: "ส่งผลด้วย AI",
