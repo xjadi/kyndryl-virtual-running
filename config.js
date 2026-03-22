@@ -18,7 +18,8 @@ const APP_CONFIG = {
   OPENROUTER_API_KEY: "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",           // e.g. "sk-or-v1-xxxxxxxxxxxx"
 
   // Google Apps Script Web App URL (required for leaderboard & submission)
-  GAS_URL: "https://script.google.com/macros/s/AKfycbyV0FY73xkULjdaad0myJeLT_2FEKF7mm9pELKqC46ildu7ubYMGW6YXsuiAIxOq6C9/exec",                       // e.g. "https://script.google.com/macros/s/.../exec"
+  GAS_URL: "https://script.google.com/macros/s/AKfycbyAn1Qgi87FrZRzcyxs22UVQngDXzIzFBMCqEToQP6RL_pROUYH73sh3scWyd3SN7h2/exec",                       // e.g. "https://script.google.com/macros/s/.../exec"
+
 
   // Default AI model for image analysis
   // Options: "openai/gpt-4o-mini" | "openai/gpt-4o" | "google/gemini-2.0-flash-001" | "anthropic/claude-3-haiku"
