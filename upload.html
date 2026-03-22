@@ -633,17 +633,16 @@ Rules:
       document.getElementById('f-time').value = data.time || '';
     }
 
-    // ── SUBMIT DATA ──
+    // ── SUBMIT DATA (POST JSON → GAS) ──
     async function submitData() {
       const gasUrl = getConfig('GAS_URL');
 
       if (!gasUrl) {
         showToast('⚠️ Please enter your Google Apps Script URL in configuration.', 'error');
-        toggleConfig();
         return;
       }
 
-      const name = document.getElementById('f-name').value.trim();
+      const name     = document.getElementById('f-name').value.trim();
       const distance = document.getElementById('f-distance').value.trim();
 
       if (!name) {
@@ -659,22 +658,35 @@ Rules:
       submitBtn.disabled = true;
       submitBtn.querySelector('span').textContent = '...';
 
-      const params = new URLSearchParams({
-        action: 'submit',
+      // Build JSON payload (includes base64 image for Drive upload)
+      const payload = {
         name,
         finish_date: document.getElementById('f-date').value,
         finish_time: document.getElementById('f-finish-time').value,
-        distance: parseFloat(distance),
-        pace: document.getElementById('f-pace').value,
-        time: document.getElementById('f-time').value,
-        submit_at: document.getElementById('f-submit-at').value,
-      });
+        distance:    parseFloat(distance),
+        pace:        document.getElementById('f-pace').value,
+        time:        document.getElementById('f-time').value,
+        submit_at:   document.getElementById('f-submit-at').value,
+        // Attach the screenshot so GAS can save it to Google Drive
+        image_base64: selectedFile ? await fileToBase64(selectedFile) : '',
+        image_mime:   selectedFile ? selectedFile.type : ''
+      };
 
       try {
-        await fetch(`${gasUrl}?${params.toString()}`);
+        const res  = await fetch(gasUrl, {
+          method: 'POST',
+          // GAS requires no-cors for simple cross-origin POST
+          mode:   'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload)
+        });
+
+        // no-cors returns an opaque response (status 0) — treat as success
         document.getElementById('result-form').classList.remove('show');
-        document.getElementById('success-panel').style.display = 'block';
         document.getElementById('ai-status').classList.remove('show');
+        document.getElementById('review-notice').style.display = 'none';
+        document.getElementById('success-panel').style.display = 'block';
+
       } catch (err) {
         console.error(err);
         showToast('Submission failed. Check your Apps Script URL.', 'error');
