@@ -110,17 +110,18 @@ nav {
 
 .nav-logo {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.7rem;
-  color: var(--orange);
-  letter-spacing: 3px;
+  font-size: 1.2rem;
+  color: var(--text);          /* black in light, white in dark */
+  letter-spacing: 2px;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem;
+  line-height: 1.1;
 }
 
 .nav-logo span {
-  color: var(--text);
+  color: var(--text);          /* same as parent — no orange accent */
 }
 
 .nav-links {
