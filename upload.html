@@ -541,9 +541,8 @@
       const apiKey = getConfig('OPENROUTER_API_KEY');
       const model = getConfig('DEFAULT_AI_MODEL') || 'openai/gpt-4o-mini';
 
-      if (!apiKey) {
-        showToast('⚠️ ' + t('upload_eyebrow') + ' — API key missing.', 'error');
-        toggleConfig();
+      if (window.location.protocol === 'file:') {
+        showToast('⚠️ Cannot use AI extraction when opening file directly. Please use Vercel Dev or a local web server.', 'error');
         return;
       }
       if (!selectedFile) {
@@ -576,24 +575,16 @@ Rules:
 - If the app shows miles, convert to km (multiply by 1.60934)
 - Return ONLY the JSON object, nothing else`;
 
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        const response = await fetch('/api/extract', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-            'HTTP-Referer': window.location.origin || 'https://runtrack.app',
-            'X-Title': 'RunTrack Virtual Event'
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            model,
-            max_tokens: 600,
-            messages: [{
-              role: 'user',
-              content: [
-                { type: 'image_url', image_url: { url: base64 } },
-                { type: 'text', text: prompt }
-              ]
-            }]
+            image: base64,
+            prompt: prompt,
+            model: model,
+            clientApiKey: apiKey // Send optional local override if user sets it manually
           })
         });
 

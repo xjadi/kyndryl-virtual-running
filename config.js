@@ -15,7 +15,7 @@
 
 const APP_CONFIG = {
   // Your OpenRouter API key (required for AI extraction)
-  OPENROUTER_API_KEY: "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",           // e.g. "sk-or-v1-xxxxxxxxxxxx"
+  OPENROUTER_API_KEY: "",           // Configured securely on Vercel or in .env
 
   // Google Apps Script Web App URL (required for leaderboard & submission)
   GAS_URL: "https://script.google.com/macros/s/AKfycbyAn1Qgi87FrZRzcyxs22UVQngDXzIzFBMCqEToQP6RL_pROUYH73sh3scWyd3SN7h2/exec",                       // e.g. "https://script.google.com/macros/s/.../exec"
