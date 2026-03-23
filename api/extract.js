@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -10,11 +10,11 @@ export default async function handler(req, res) {
   const apiKey = clientApiKey || process.env.OPENROUTER_API_KEY;
 
   if (!apiKey) {
-    return res.status(400).json({ error: 'Missing API key. Configure it in Vercel or pass it from the client.' });
+    return res.status(400).json({ error: { message: 'Missing API key. Configure it in .env or pass it from the client.' } });
   }
 
   if (!image || !prompt) {
-    return res.status(400).json({ error: 'Image and prompt are required.' });
+    return res.status(400).json({ error: { message: 'Image and prompt are required.' } });
   }
 
   try {
@@ -49,6 +49,6 @@ export default async function handler(req, res) {
     const data = await response.json();
     res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: { message: err.message } });
   }
 }
