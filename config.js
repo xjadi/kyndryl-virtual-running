@@ -24,7 +24,7 @@ const APP_CONFIG = {
   // Default AI model for image analysis
   //google/gemini-2.5-flash-lite
 
-  DEFAULT_AI_MODEL: "google/gemma-3-27b-it:free",
+  DEFAULT_AI_MODEL: "google/gemini-2.5-flash-lite",
 };
 
 // Expose a helper that returns localStorage override → config.js value → fallback
